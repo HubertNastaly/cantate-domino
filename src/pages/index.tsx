@@ -1,6 +1,16 @@
+import { Page, PageContent } from '@/components/Page'
+import { useSongs } from '@/hooks'
 import Head from 'next/head'
+import { useEffect } from 'react'
 
 export default function Home() {
+  const { songs, fetchNextSongsChunk } = useSongs()
+  console.log({ songs })
+
+  useEffect(() => {
+    fetchNextSongsChunk()
+  }, [])
+
   return (
     <>
       <Head>
@@ -10,9 +20,12 @@ export default function Home() {
         {/* TODO: add icon */}
         {/* <link rel="icon" href="/favicon.ico" /> */} 
       </Head>
-      <main>
-
-      </main>
+      <Page>
+        <PageContent>
+          Hello world
+          <button onClick={fetchNextSongsChunk}>Fetch more</button>
+        </PageContent>
+      </Page>
     </>
   )
 }
