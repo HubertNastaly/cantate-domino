@@ -1,18 +1,12 @@
 import { Page, PageContent } from '@/components/Page'
-import { useSongs } from '@/hooks'
+import { Songs } from '@/components/Songs'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Head from 'next/head'
-import { useEffect } from 'react'
 
 export default function Home() {
-  const { songs, fetchNextSongsChunk } = useSongs()
-  console.log({ songs })
-
-  useEffect(() => {
-    fetchNextSongsChunk()
-  }, [])
-
+  const client = new QueryClient()
   return (
-    <>
+    <QueryClientProvider client={client}>
       <Head>
         <title>Cantate Domino</title>
         <meta name="description" content="Liturgical song book extended with each voice samples" />
@@ -22,10 +16,9 @@ export default function Home() {
       </Head>
       <Page>
         <PageContent>
-          Hello world
-          <button onClick={fetchNextSongsChunk}>Fetch more</button>
+          <Songs />
         </PageContent>
       </Page>
-    </>
+    </QueryClientProvider>
   )
 }
