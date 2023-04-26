@@ -1,4 +1,4 @@
-import { VOICES, Voice, Voices } from "@/types";
+import { VOICES, Voice, VoiceFiles } from "@/types";
 import { getDriveInstance } from "@/utils";
 import { drive_v3 } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
@@ -12,7 +12,7 @@ interface SongRequest extends NextApiRequest {
 interface SongResponse {
   id: string
   name: string
-  voices: Voices
+  voiceFiles: VoiceFiles
 }
 
 export default async function handler(req: SongRequest, res: NextApiResponse<SongResponse>) {
@@ -20,29 +20,33 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
 
   const drive = getDriveInstance()
 
-  const { data: { name } } = await drive.files.get({
+  const songPromise = drive.files.get({
     fileId: songId
   })
 
-  // TODO: parallelize with the one above
-  const { data: { files } } = await drive.files.list({
+  const voicesPromise = drive.files.list({
     supportsAllDrives: true,
     includeItemsFromAllDrives: true,
     fields: 'files(id, name)',
     q: `"${songId}" in parents`,
   })
 
+  const [songResult, voicesResult] = await Promise.all([songPromise, voicesPromise])
+
+  const { name } = songResult.data
+  const { files } = voicesResult.data
+
   if(!name) {
     return res.status(404)
   }
 
   const voiceEntries = VOICES.map((voice): [Voice, string | undefined] => [voice, getVoiceFileId(voice, files)])
-  const voices = Object.fromEntries(voiceEntries) as Voices
+  const voiceFiles = Object.fromEntries(voiceEntries) as VoiceFiles
 
   res.status(200).send({
     id: songId,
     name,
-    voices
+    voiceFiles
   })
 }
 

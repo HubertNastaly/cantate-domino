@@ -1,7 +1,11 @@
-import { Page, PageContent } from "@/components";
+import { AudioBar, Page, PageContent } from "@/components";
 import { useSong } from "@/hooks";
+import { VOICES, Voice } from "@/types";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import styled from 'styled-components'
+
+const VOICE_FILE_BASE_URL = 'https://docs.google.com/uc?export=open'
 
 export default function SongPage () {
   const { query: { songId } } = useRouter()
@@ -22,31 +26,25 @@ interface Props {
 }
 
 const SongPageContent = ({ songId }: Props) => {
-  const { data } = useSong(songId)
-  const voices = data?.voices ? Object.entries(data.voices) : []
+  const { data, isLoading } = useSong(songId)
+  const [selectedVoice, setSelectedVoice] = useState<Voice|null>(null)
+
+  if(isLoading || !data) {
+    return <span>Loading...</span>
+  }
+  
+  const { voiceFiles, name } = data
+  const fileUrl = selectedVoice && `${VOICE_FILE_BASE_URL}&id=${voiceFiles[selectedVoice]}`
+
   return (
     <PageContent>
-      <Title>{data?.name}</Title>
-      <ul>
-        {voices.map(([voice, fileId]) => (
-          <li key={fileId}>{voice}</li>
-        ))}
-      </ul>
-      <Audio controls>
-        <source src="https://docs.google.com/uc?export=open&id=1EVMte8TB24FXcayb_c3ISRPy99pAkd40" type="audio/mp3" />
-        <p>This browser does not support HTML5 audio</p>
-      </Audio>
+      <Title>{name}</Title>
+      {VOICES.map(voice => (
+        <button key={voice} onClick={() => setSelectedVoice(voice)} disabled={!voiceFiles[voice]}>{voice}</button>
+      ))}
+      <AudioBar fileUrl={fileUrl} />
     </PageContent>
   )
 }
 
-const Title = styled.h1`
-  
-`
-
-const Audio = styled.audio`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-`
+const Title = styled.h1``

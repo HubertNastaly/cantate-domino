@@ -1,4 +1,4 @@
-import { Voices } from "./voice"
+import { VoiceFiles } from "./voice"
 
 export interface Song {
   id: string
@@ -6,5 +6,5 @@ export interface Song {
 }
 
 export interface SongDetailed extends Song {
-  voices: Voices
+  voiceFiles: VoiceFiles
 }
