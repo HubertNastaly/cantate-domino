@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
 
+const BOTTOM_OFFSET = 100
+
 export const useInfiniteScroll = (onEndReached: () => void) => {
   useEffect(() => {
     const handleScroll = () => {
-      if(window.scrollY + window.innerHeight >= document.body.offsetHeight) {
+      if(window.scrollY + window.innerHeight >= document.body.offsetHeight - BOTTOM_OFFSET) {
         onEndReached()
       }
     }
