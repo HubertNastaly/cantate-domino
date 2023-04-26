@@ -1,23 +1,42 @@
 import { useSongs } from "@/hooks"
 import { Fragment } from "react"
+import { SongCard } from "./SongCard"
+import styled from "styled-components"
 
-export const Songs = () => {
+interface Props {
+  className?: string
+}
+
+export const Songs = ({ className }: Props) => {
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useSongs()
   const isDisabled = isFetchingNextPage || !hasNextPage
 
   return (
-    <>
-      <ul>
+    <Container className={className}>
+      <List>
         {data?.pages.map(({ songs }, idx) => (
           <Fragment key={`page-${idx}`}>
-            {songs.map(({ name, id }) => (
-              <div key={id}>{name}</div>
+            {songs.map(song => (
+              <SongCard key={song.id} song={song}  />
             ))}
           </Fragment>
         ))}
-      </ul>
+      </List>
       <button onClick={() => fetchNextPage()} disabled={isDisabled}>{isFetchingNextPage ? 'Loading...' : 'More'}</button>
       {!hasNextPage && <div>ALL CONTENT LOADED</div>}
-    </>
+    </ Container>
   )
 }
+
+const Container = styled.div`
+  width: 100%;
+`
+
+const List = styled.ul`
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 16px;
+  row-gap: 64px;
+`
