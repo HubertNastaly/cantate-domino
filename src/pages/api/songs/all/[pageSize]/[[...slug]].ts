@@ -1,8 +1,6 @@
 import { Song } from "@/types";
+import { getDriveInstance } from "@/utils";
 import { NextApiRequest, NextApiResponse } from "next";
-import { google } from 'googleapis'
-
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REDIRECT_URI, GOOGLE_REFRESH_TOKEN } = process.env
 
 const FOLDER_ID = '1FV1LKvEBpOfNS1_UtPnTgPfbs7T1I8O_'
 
@@ -22,12 +20,7 @@ export default async function handler(req: SongsRequest, res: NextApiResponse<So
   const { pageSize, slug } = req.query
   const [pageToken] = slug ?? []
 
-  const client = new google.auth.OAuth2({ clientId: GOOGLE_CLIENT_ID, clientSecret: GOOGLE_CLIENT_SECRET, redirectUri: GOOGLE_REDIRECT_URI })
-  client.setCredentials({
-    refresh_token: GOOGLE_REFRESH_TOKEN
-  })
-  
-  const drive = google.drive({ version: 'v3', auth: client })
+  const drive = getDriveInstance()
   const { data: { files = [], nextPageToken = null } } = await drive.files.list({
     supportsAllDrives: true,
     includeItemsFromAllDrives: true,

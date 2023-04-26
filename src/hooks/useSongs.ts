@@ -9,7 +9,7 @@ interface PageParam {
 }
 
 const SONGS_PER_CHUNK = 6
-const API_URL = `/api/songs/${SONGS_PER_CHUNK}`
+const API_URL = `/api/songs/all/${SONGS_PER_CHUNK}`
 
 export const useSongs = () => {
   const fetchNextSongsChunk = useCallback(async (pageParam: PageParam | undefined): Promise<PageParam> => {
