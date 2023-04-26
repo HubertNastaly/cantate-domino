@@ -1,15 +1,16 @@
 import { Song } from "@/types"
+import Link from "next/link"
 import styled from "styled-components"
 
 interface Props {
   song: Song
 }
 
-export const SongCard = ({ song: { name } }: Props) => {
+export const SongCard = ({ song: { id, name } }: Props) => {
   return (
     <Container>
       <Cover />
-      <Title>{name}</Title>
+      <Title href={`/songs/${id}`}>{name}</Title>
     </Container>
   )
 }
@@ -29,6 +30,6 @@ const Cover = styled.div`
   background-color: black;
 `
 
-const Title = styled.span`
+const Title = styled(Link)`
   text-align: center
 `
