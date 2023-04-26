@@ -8,7 +8,7 @@ interface PageParam {
   songs: Song[]
 }
 
-const SONGS_PER_CHUNK = 6
+const SONGS_PER_CHUNK = 20
 const API_URL = `/api/songs/all/${SONGS_PER_CHUNK}`
 
 export const useSongs = () => {

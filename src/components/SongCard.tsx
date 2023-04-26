@@ -1,6 +1,11 @@
 import { Song } from "@/types"
 import Link from "next/link"
 import styled from "styled-components"
+import { toSvg } from 'jdenticon'
+import { COLORS } from "@/utils/colors"
+
+const CARD_SIZE = 200
+const ICON_SIZE = 0.9 * CARD_SIZE
 
 interface Props {
   song: Song
@@ -9,27 +14,55 @@ interface Props {
 export const SongCard = ({ song: { id, name } }: Props) => {
   return (
     <Container>
-      <Cover />
+      <Cover dangerouslySetInnerHTML={{ __html: toSvg(id, ICON_SIZE) }} />
       <Title href={`/songs/${id}`}>{name}</Title>
     </Container>
   )
 }
 
+const Cover = styled.div`
+  width: ${CARD_SIZE}px;
+  height: ${CARD_SIZE}px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: ${COLORS.background};
+  background: linear-gradient(215deg, rgba(255,255,255,1) 20%, rgba(244,244,244,1) 80%);
+  border-radius: 8px;
+
+  transition: all 0.3s ease-out;
+
+  & path {
+    fill: ${COLORS.accent};
+  }
+
+  -webkit-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+  box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+`
+
+const Title = styled(Link)`
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  color: ${COLORS.primary};
+`
+
 const Container = styled.li`
-  width: 200px;
+  width: ${CARD_SIZE}px;
   display: flex;
   flex-direction: column;
   align-items: center;
   row-gap: 16px;
   cursor: pointer;
-`
 
-const Cover = styled.div`
-  width: 200px;
-  height: 200px;
-  background-color: black;
-`
-
-const Title = styled(Link)`
-  text-align: center
+  &:hover {
+    & ${Cover} {
+      -webkit-box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+      -moz-box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+      box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+    }
+  }
 `
