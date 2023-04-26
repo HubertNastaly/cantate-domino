@@ -1,4 +1,4 @@
-import { useSongs } from "@/hooks"
+import { useInfiniteScroll, useSongs } from "@/hooks"
 import { Fragment } from "react"
 import { SongCard } from "./SongCard"
 import styled from "styled-components"
@@ -8,8 +8,9 @@ interface Props {
 }
 
 export const Songs = ({ className }: Props) => {
-  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } = useSongs()
-  const isDisabled = isFetchingNextPage || !hasNextPage
+  const { data, fetchNextPage, isFetchingNextPage } = useSongs()
+
+  useInfiniteScroll(fetchNextPage)
 
   return (
     <Container className={className}>
@@ -22,8 +23,7 @@ export const Songs = ({ className }: Props) => {
           </Fragment>
         ))}
       </List>
-      <button onClick={() => fetchNextPage()} disabled={isDisabled}>{isFetchingNextPage ? 'Loading...' : 'More'}</button>
-      {!hasNextPage && <div>ALL CONTENT LOADED</div>}
+      {isFetchingNextPage && <span>Loading...</span>}
     </ Container>
   )
 }

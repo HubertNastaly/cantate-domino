@@ -8,7 +8,7 @@ interface PageParam {
   songs: Song[]
 }
 
-const SONGS_PER_CHUNK = 4
+const SONGS_PER_CHUNK = 6
 const API_URL = `/api/songs/${SONGS_PER_CHUNK}`
 
 export const useSongs = () => {
@@ -36,5 +36,12 @@ export const useSongs = () => {
     }
   })
 
-  return queryResult
+  const fetchNextPage = useCallback(() => {
+    const { hasNextPage, fetchNextPage } = queryResult
+    if(hasNextPage) {
+      fetchNextPage()
+    }
+  }, [queryResult])
+
+  return { ...queryResult, fetchNextPage }
 }

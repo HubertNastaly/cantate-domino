@@ -24,5 +24,5 @@ export default function Home() {
 }
 
 const SongsStyled = styled(Songs)`
-  margin-top: 64px;
+  padding: 64px 0;
 `
