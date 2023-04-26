@@ -9,14 +9,11 @@ export function useSong(songId: string) {
   const fetchSong = useCallback(async () => {
     const { data, status } = await axios.get<SongDetailed>(`${API_URL}/${songId}`)
     if(status === 200) {
-      return {
-        id: data.id,
-        name: data.name
-      }
+      return data
     } else {
       throw new Error(`Response: ${status}`)
     }
-  }, [])
+  }, [songId])
 
   const queryResult = useQuery({
     queryKey: [`fetchSong-${songId}`],

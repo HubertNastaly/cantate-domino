@@ -28,7 +28,6 @@ export default async function handler(req: SongsRequest, res: NextApiResponse<So
     pageToken,
     fields: 'nextPageToken, files(id, name)',
     q: `parents in "${FOLDER_ID}" and mimeType = "application/vnd.google-apps.folder"`,
-    
   })
 
   res.status(200).send({
