@@ -38,7 +38,7 @@ const List = styled.ul`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  column-gap: 16px;
+  column-gap: 32px;
   row-gap: 64px;
   padding: 0;
 `
