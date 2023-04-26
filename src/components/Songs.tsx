@@ -36,7 +36,9 @@ const List = styled.ul`
   max-width: 100%;
   margin: 0 auto;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   column-gap: 16px;
   row-gap: 64px;
+  padding: 0;
 `
