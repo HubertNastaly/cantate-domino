@@ -8,13 +8,21 @@ interface PageParam {
   songs: Song[]
 }
 
-const SONGS_PER_CHUNK = 20
-const API_URL = `/api/songs/all/${SONGS_PER_CHUNK}`
+const ROWS_PER_CHUNK = 5
+const API_URL = `/api/songs/all`
 
-export const useSongs = () => {
+export const useSongs = (cardsInRow: number = 0) => {
+  const songsPerChunk = ROWS_PER_CHUNK * cardsInRow
+
   const fetchNextSongsChunk = useCallback(async (pageParam: PageParam | undefined): Promise<PageParam> => {
+    if(songsPerChunk === 0) {
+      return {
+        songs: [],
+        nextPageToken: null
+      }
+    }
     const { nextPageToken } = pageParam ?? {}
-    const { data, status } = await axios.get<PageParam>(nextPageToken ? `${API_URL}/${nextPageToken}` : API_URL)
+    const { data, status } = await axios.get<PageParam>(nextPageToken ? `${API_URL}/${songsPerChunk}/${nextPageToken}` : `${API_URL}/${songsPerChunk}`)
     if(status === 200) {
       return {
         songs: data.songs,
@@ -23,7 +31,7 @@ export const useSongs = () => {
     } else {
       throw new Error(`Response: ${status}`)
     }
-  }, [])
+  }, [songsPerChunk])
 
   const queryResult = useInfiniteQuery<PageParam>({
     queryKey: ['fetchSongs'],

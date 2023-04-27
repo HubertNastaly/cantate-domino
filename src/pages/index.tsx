@@ -1,8 +1,11 @@
 import { Page, PageContent, Songs } from '@/components'
+import { useElementWidth } from '@/hooks'
 import Head from 'next/head'
 import styled from 'styled-components'
 
 export default function Home() {
+  const [contentRef, contentWidth] = useElementWidth<HTMLDivElement>()
+
   return (
     <>
       <Head>
@@ -13,8 +16,8 @@ export default function Home() {
         {/* <link rel="icon" href="/favicon.ico" /> */} 
       </Head>
       <Page>
-        <PageContent>
-          <SongsStyled />
+        <PageContent ref={contentRef}>
+          {contentWidth && <SongsStyled width={contentWidth} />}
         </PageContent>
       </Page>
     </>

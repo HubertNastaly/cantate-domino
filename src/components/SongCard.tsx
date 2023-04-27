@@ -3,8 +3,8 @@ import Link from "next/link"
 import styled from "styled-components"
 import { toSvg } from 'jdenticon'
 import { COLORS } from "@/utils/colors"
+import { CARD_SIZE } from "@/constants"
 
-const CARD_SIZE = 200
 const ICON_SIZE = 0.9 * CARD_SIZE
 
 interface Props {

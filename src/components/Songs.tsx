@@ -2,14 +2,16 @@ import { useInfiniteScroll, useSongs } from "@/hooks"
 import { Fragment } from "react"
 import { SongCard } from "./SongCard"
 import styled from "styled-components"
+import { COLUMN_GAP } from "@/constants"
+import { cardsNumberInRow } from "@/utils/cardsNumberInRow"
 
 interface Props {
+  width: number
   className?: string
 }
 
-export const Songs = ({ className }: Props) => {
-  const { data, fetchNextPage, isFetchingNextPage } = useSongs()
-
+export const Songs = ({ className, width }: Props) => {
+  const { data, fetchNextPage, isFetchingNextPage } = useSongs(cardsNumberInRow(width))
   useInfiniteScroll(fetchNextPage)
 
   return (
@@ -38,7 +40,7 @@ const List = styled.ul`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  column-gap: 32px;
+  column-gap: ${COLUMN_GAP}px;
   row-gap: 64px;
   padding: 0;
   list-style-type: none;

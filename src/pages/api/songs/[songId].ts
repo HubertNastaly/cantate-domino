@@ -1,5 +1,5 @@
 import { VOICES, Voice, VoiceFiles } from "@/types";
-import { getDriveInstance } from "@/utils";
+import { getDriveInstance } from "@/utils/googleApi";
 import { drive_v3 } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
 
