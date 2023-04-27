@@ -1,10 +1,12 @@
-import { Page, PageContent, Songs } from '@/components'
+import { Page, PageContent, SearchBar, Songs } from '@/components'
 import { useElementWidth } from '@/hooks'
 import Head from 'next/head'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 export default function Home() {
   const [contentRef, contentWidth] = useElementWidth<HTMLDivElement>()
+  const [searchPhrase, setSearch] = useState<string>('')
 
   return (
     <>
@@ -16,14 +18,21 @@ export default function Home() {
         {/* <link rel="icon" href="/favicon.ico" /> */} 
       </Head>
       <Page>
-        <PageContent ref={contentRef}>
-          {contentWidth && <SongsStyled width={contentWidth} />}
-        </PageContent>
+        <PageContentStyled ref={contentRef}>
+          <SearchBar
+            value={searchPhrase}
+            onChange={setSearch}
+          />
+          {contentWidth && <Songs width={contentWidth} filterText={searchPhrase} />}
+        </PageContentStyled>
       </Page>
     </>
   )
 }
 
-const SongsStyled = styled(Songs)`
+const PageContentStyled = styled(PageContent)`
   padding: 64px 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: 64px;
 `
