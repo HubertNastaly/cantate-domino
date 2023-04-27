@@ -7,11 +7,12 @@ import { cardsNumberInRow } from "@/utils/cardsNumberInRow"
 
 interface Props {
   width: number
+  filterText?: string
   className?: string
 }
 
-export const Songs = ({ className, width }: Props) => {
-  const { data, fetchNextPage, isFetchingNextPage } = useSongs(cardsNumberInRow(width))
+export const Songs = ({ className, width, filterText }: Props) => {
+  const { data, fetchNextPage, isFetchingNextPage } = useSongs(cardsNumberInRow(width), filterText)
   useInfiniteScroll(fetchNextPage)
 
   return (
