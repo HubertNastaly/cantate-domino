@@ -4,6 +4,7 @@ import { SongCard } from "./SongCard"
 import styled from "styled-components"
 import { COLUMN_GAP } from "@/constants"
 import { cardsNumberInRow } from "@/utils/cardsNumberInRow"
+import { LoaderRow } from "./LoaderRow"
 
 interface Props {
   width: number
@@ -12,8 +13,11 @@ interface Props {
 }
 
 export const Songs = ({ className, width, filterText }: Props) => {
-  const { data, fetchNextPage, isFetchingNextPage } = useSongs(cardsNumberInRow(width), filterText)
+  const cardsInRow = cardsNumberInRow(width)
+  const { data, fetchNextPage, isFetchingNextPage, isLoading } = useSongs(cardsInRow, filterText)
   useInfiniteScroll(fetchNextPage)
+
+  const isBusy = isFetchingNextPage || isLoading
 
   return (
     <Container className={className}>
@@ -25,8 +29,8 @@ export const Songs = ({ className, width, filterText }: Props) => {
             ))}
           </Fragment>
         ))}
+        {isBusy && <LoaderRow cardsInRow={cardsInRow} />}
       </List>
-      {isFetchingNextPage && <span>Loading...</span>}
     </ Container>
   )
 }
