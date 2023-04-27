@@ -1,6 +1,6 @@
 import { Song } from "@/types"
 import Link from "next/link"
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { toSvg } from 'jdenticon'
 import { COLORS } from "@/utils/colors"
 import { CARD_SIZE } from "@/constants"
@@ -22,7 +22,19 @@ export const SongCard = ({ song: { id, name } }: Props) => {
   )
 }
 
-const Cover = styled.div`
+export const bigShadow = css`
+  -webkit-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+  box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+`
+
+export const smallShadow = css`
+  -webkit-box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+  box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+`
+
+export const Cover = styled.div`
   width: ${CARD_SIZE}px;
   height: ${CARD_SIZE}px;
 
@@ -40,9 +52,7 @@ const Cover = styled.div`
     fill: ${COLORS.accent};
   }
 
-  -webkit-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
-  -moz-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
-  box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
+  ${bigShadow}
 `
 
 const Title = styled.span`
@@ -58,9 +68,7 @@ const Container = styled.li`
 
   &:hover {
     & ${Cover} {
-      -webkit-box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
-      -moz-box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
-      box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
+      ${smallShadow}
     }
   }
 `
