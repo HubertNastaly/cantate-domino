@@ -14,8 +14,10 @@ interface Props {
 export const SongCard = ({ song: { id, name } }: Props) => {
   return (
     <Container>
-      <Cover dangerouslySetInnerHTML={{ __html: toSvg(id, ICON_SIZE) }} />
-      <Title href={`/songs/${id}`}>{name}</Title>
+      <SongLink href={`/songs/${id}`}>
+        <Cover dangerouslySetInnerHTML={{ __html: toSvg(id, ICON_SIZE) }} />
+        <Title>{name}</Title>
+      </SongLink>
     </Container>
   )
 }
@@ -43,19 +45,14 @@ const Cover = styled.div`
   box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
 `
 
-const Title = styled(Link)`
+const Title = styled.span`
   text-align: center;
-  text-decoration: none;
   font-size: 18px;
   color: ${COLORS.primary};
 `
 
 const Container = styled.li`
   width: ${CARD_SIZE}px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 16px;
   cursor: pointer;
 
   &:hover {
@@ -65,4 +62,12 @@ const Container = styled.li`
       box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
     }
   }
+`
+
+const SongLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 16px;
+  text-decoration: none;
 `

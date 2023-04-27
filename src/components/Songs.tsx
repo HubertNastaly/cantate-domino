@@ -41,4 +41,5 @@ const List = styled.ul`
   column-gap: 32px;
   row-gap: 64px;
   padding: 0;
+  list-style-type: none;
 `
