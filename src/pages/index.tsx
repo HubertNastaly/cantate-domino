@@ -19,6 +19,7 @@ export default function Home() {
       </Head>
       <Page>
         <PageContentStyled ref={contentRef}>
+          <Title>Dwunastka</Title>
           <SearchBar
             value={searchPhrase}
             onChange={setSearch}
@@ -29,6 +30,17 @@ export default function Home() {
     </>
   )
 }
+
+const Title = styled.h1`
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 96px;
+  font-weight: 300;
+
+  @media screen and (max-width: 480px) {
+    font-size: 72px;
+  }
+`
 
 const PageContentStyled = styled(PageContent)`
   padding: 64px 0;
