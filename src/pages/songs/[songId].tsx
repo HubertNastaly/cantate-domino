@@ -1,4 +1,4 @@
-import { AudioBar, Page, PageContent } from "@/components";
+import { AudioBar, Page, PageContent, QrCode } from "@/components";
 import { useSong } from "@/hooks";
 import { VOICES, Voice } from "@/types";
 import { useRouter } from "next/router";
@@ -37,6 +37,7 @@ const SongPageContent = ({ songId }: Props) => {
   return (
     <PageContent>
       <Title>{name}</Title>
+      <QrCode url={'http://localhost:3000/songs/1TzuKPNeGFEx-owCFI-gUYJCdCem-GJja'} />
       {VOICES.map(voice => (
         <button key={voice} onClick={() => setSelectedVoice(voice)} disabled={!voiceFiles[voice]}>{voice}</button>
       ))}
