@@ -43,7 +43,6 @@ const Title = styled.h1`
 `
 
 const PageContentStyled = styled(PageContent)`
-  padding: 64px 0;
   display: flex;
   flex-direction: column;
   row-gap: 64px;

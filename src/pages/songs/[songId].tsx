@@ -5,8 +5,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from 'styled-components'
 
-const VOICE_FILE_BASE_URL = 'https://docs.google.com/uc?export=open'
-
 export default function SongPage () {
   const { query: { songId } } = useRouter()
 
@@ -27,14 +25,14 @@ interface Props {
 
 const SongPageContent = ({ songId }: Props) => {
   const { data, isLoading } = useSong(songId)
-  const [selectedVoice, setSelectedVoice] = useState<Voice|null>(null)
+  const [selectedVoice, setSelectedVoice] = useState<Voice>()
 
   if(isLoading || !data) {
     return <span>Loading...</span>
   }
   
-  const { voiceFiles, name } = data
-  const fileUrl = selectedVoice && `${VOICE_FILE_BASE_URL}&id=${voiceFiles[selectedVoice]}`
+  const { voiceFiles, name, imageFiles, pdfFiles } = data
+  const selectedVoiceFile = selectedVoice && googleFileUrl(voiceFiles[selectedVoice])
 
   return (
     <PageContent>
@@ -42,9 +40,37 @@ const SongPageContent = ({ songId }: Props) => {
       {VOICES.map(voice => (
         <button key={voice} onClick={() => setSelectedVoice(voice)} disabled={!voiceFiles[voice]}>{voice}</button>
       ))}
-      <AudioBar fileUrl={fileUrl} />
+      <Gallery>
+        {imageFiles.map((fileId, idx) => (
+          <Image key={fileId} src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${idx + 1}`} />
+        ))}
+      </Gallery>
+      <AudioBar fileUrl={selectedVoiceFile} />
     </PageContent>
   )
 }
 
+const GOOGLE_FILE_BASE_URL = 'https://docs.google.com/uc?export=open'
+
+function googleFileUrl(fileId: string | undefined) {
+  if(!fileId) {
+    return undefined
+  }
+  return `${GOOGLE_FILE_BASE_URL}&id=${fileId}`
+}
+
 const Title = styled.h1``
+
+const Gallery = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+`
+
+const Image = styled.img`
+  width: 680px;
+  max-width: 100%;
+  max-height: 90vh;
+`

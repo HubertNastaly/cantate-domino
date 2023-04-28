@@ -7,4 +7,6 @@ export interface Song {
 
 export interface SongDetailed extends Song {
   voiceFiles: VoiceFiles
+  pdfFiles: string[]
+  imageFiles: string[]
 }

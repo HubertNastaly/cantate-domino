@@ -1,8 +1,8 @@
-import { forwardRef, useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import styled from "styled-components"
 
 interface Props {
-  fileUrl: string | null
+  fileUrl: string | undefined
 }
 
 export const AudioBar = ({ fileUrl }: Props) => {
