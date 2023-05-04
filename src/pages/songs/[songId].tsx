@@ -71,6 +71,7 @@ const PageContentStyled = styled(PageContent)`
   display: flex;
   flex-direction: column;
   row-gap: 32px;
+  padding-bottom: 192px;
 `
 
 const Header = styled.div`
@@ -118,7 +119,7 @@ const QrCodeStyled = styled(QrCode)`
 `
 
 const AudioBarStyled = styled(AudioBar)`
-  padding: 8px;
+  padding: 16px 8px 8px 8px;
   box-sizing: border-box;
   position: fixed;
   bottom: 0;

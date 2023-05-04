@@ -5,6 +5,7 @@ import { ChangeEvent, SyntheticEvent, useCallback, useEffect } from "react"
 import { IoIosPause, IoIosPlay } from "react-icons/io"
 import { MdForward5, MdReplay5 } from 'react-icons/md'
 import styled, { css } from "styled-components"
+import { bigShadow } from "./SongCard"
 
 interface Props {
   className?: string
@@ -88,6 +89,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: ${COLORS.background};
+
+  ${bigShadow}
 `
 
 const Audio = styled.audio<{ hide?: boolean }>`
@@ -153,7 +157,7 @@ const thumbStyles = css`
 
 // TODO: update styles accross different browsers
 const Slider = styled.input.attrs({ type: 'range' })`
-  height: 64px;
+  height: 48px;
   width: 100%;
 
   // track
