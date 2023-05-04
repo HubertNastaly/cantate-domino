@@ -40,7 +40,7 @@ const SongPageContent = ({ songId }: Props) => {
       <Header>
         <SongCard song={data} small hideTitle />
         <Title>{name}</Title>
-        <QrCode url={'http://localhost:3000/songs/1TzuKPNeGFEx-owCFI-gUYJCdCem-GJja'} />
+        <QrCode url={window.location.href} />
       </Header>
       <VoiceButtons
         voiceFiles={voiceFiles}
