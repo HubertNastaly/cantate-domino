@@ -1,15 +1,16 @@
 import { useOutsideClick } from "@/hooks"
 import { COLORS } from "@/utils/colors"
-import { ReactNode, useRef, useState, HTMLProps } from "react"
+import { ReactNode, useRef, useState } from "react"
 import { createPortal } from "react-dom"
-import styled from "styled-components"
+import styled, { keyframes } from "styled-components"
 
 interface Props {
-  trigger: (props: HTMLProps<HTMLButtonElement>) => JSX.Element
+  trigger: (props: { onClick: () => void }) => JSX.Element
   children: ReactNode
+  hideFrame?: boolean
 }
 
-export const Modal = ({ trigger: Trigger, children }: Props) => {
+export const Modal = ({ trigger: Trigger, children, hideFrame }: Props) => {
   const [isModalOpened, setIsModalOpened] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
   useOutsideClick(modalRef, () => setIsModalOpened(false))
@@ -25,7 +26,7 @@ export const Modal = ({ trigger: Trigger, children }: Props) => {
       {isModalOpened && createPortal(
         <>
           <Shadow />
-          <ModalWrapper ref={modalRef}>
+          <ModalWrapper ref={modalRef} hideFrame={hideFrame}>
             {children}
           </ModalWrapper>
         </>,
@@ -36,23 +37,35 @@ export const Modal = ({ trigger: Trigger, children }: Props) => {
 }
 
 const Shadow = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 3;
   width: 100%;
   height: 100%;
   background-color: black;
-  opacity: 0.5;
+  opacity: 0.7;
 `
 
-const ModalWrapper = styled.div`
+const scaleUp = keyframes`
+  from {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(100%);
+  }
+`
+
+const ModalWrapper = styled.div<{ hideFrame?: boolean }>`
   position: fixed;
   z-index: 5;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 16px;
+  padding: ${props => props.hideFrame ? 0 : 16}px;
   border-radius: 4px;
-  background: ${COLORS.background};
+  background: ${props => props.hideFrame ? 'none' : COLORS.background};
+
+  animation: ${scaleUp} 0.2s ease-out;
 `

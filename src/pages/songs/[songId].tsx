@@ -1,8 +1,9 @@
-import { AudioBar, Page, PageContent, QrCode, VoiceButtons } from "@/components";
+import { AudioBar, Gallery, Page, PageContent, QrCode, VoiceButtons } from "@/components";
 import { SongCard } from "@/components/SongCard";
 import { BREAKPOINT } from "@/constants";
 import { useSong } from "@/hooks";
 import { Voice } from "@/types";
+import { googleFileUrl } from "@/utils/googleFileUrl";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from 'styled-components'
@@ -48,23 +49,10 @@ const SongPageContent = ({ songId }: Props) => {
         selectedVoice={selectedVoice}
         onVoiceChange={setSelectedVoice}
       />
-      <Gallery>
-        {imageFiles.map((fileId, idx) => (
-          <Image key={fileId} src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${idx + 1}`} />
-        ))}
-      </Gallery>
+      <Gallery imageFiles={imageFiles} songName={name} />
       <AudioBarStyled fileUrl={selectedVoiceFile} />
     </PageContentStyled>
   )
-}
-
-const GOOGLE_FILE_BASE_URL = 'https://docs.google.com/uc?export=open'
-
-function googleFileUrl(fileId: string | undefined) {
-  if(!fileId) {
-    return undefined
-  }
-  return `${GOOGLE_FILE_BASE_URL}&id=${fileId}`
 }
 
 const PageContentStyled = styled(PageContent)`
@@ -94,20 +82,6 @@ const Title = styled.h1`
   margin-right: 16px;
 `
 
-const Gallery = styled.div`
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-`
-
-const Image = styled.img`
-  width: 680px;
-  max-width: 100%;
-  max-height: 90vh;
-`
-
 const QrCodeStyled = styled(QrCode)`
   flex-shrink: 0;
   order: 3;
@@ -122,6 +96,7 @@ const AudioBarStyled = styled(AudioBar)`
   padding: 16px 8px 8px 8px;
   box-sizing: border-box;
   position: fixed;
+  z-index: 3;
   bottom: 0;
   left: 0;
 `
