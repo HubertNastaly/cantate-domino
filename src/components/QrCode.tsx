@@ -5,13 +5,14 @@ import { Modal } from "./Modal"
 
 interface Props {
   url: string
+  className?: string
 }
 
-export const QrCode = ({ url }: Props) => {
+export const QrCode = ({ url, className }: Props) => {
   return (
     <Modal
       trigger={(props) => (
-        <IconButton onClick={props.onClick}>
+        <IconButton onClick={props.onClick} className={className}>
           <MdQrCode size={32} />
         </IconButton>
       )}

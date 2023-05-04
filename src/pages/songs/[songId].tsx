@@ -40,7 +40,7 @@ const SongPageContent = ({ songId }: Props) => {
       <Header>
         <SongCard song={data} small hideTitle />
         <Title>{name}</Title>
-        <QrCode url={window.location.href} />
+        <QrCodeStyled url={window.location.href} />
       </Header>
       <VoiceButtons
         voiceFiles={voiceFiles}
@@ -94,4 +94,7 @@ const Image = styled.img`
   width: 680px;
   max-width: 100%;
   max-height: 90vh;
+`
+const QrCodeStyled = styled(QrCode)`
+  flex-shrink: 0;
 `
