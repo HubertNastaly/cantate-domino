@@ -10,9 +10,10 @@ interface Props {
   small?: boolean
   clickable?: boolean
   hideTitle?: boolean
+  className?: string
 }
 
-export const SongCard = ({ song: { id, name }, small, clickable, hideTitle }: Props) => {
+export const SongCard = ({ song: { id, name }, small, clickable, hideTitle, className }: Props) => {
   const cardSize = small ? CARD_SIZE.small : CARD_SIZE.big
   const iconSize = 0.9 * cardSize
 
@@ -24,7 +25,7 @@ export const SongCard = ({ song: { id, name }, small, clickable, hideTitle }: Pr
   )
 
   return (
-    <Container size={cardSize}>
+    <Container size={cardSize} className={className}>
       {clickable ? (
         <SongLink href={`/songs/${id}`}>
           {content()}

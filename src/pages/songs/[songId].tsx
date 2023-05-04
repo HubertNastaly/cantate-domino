@@ -1,5 +1,6 @@
 import { AudioBar, Page, PageContent, QrCode, VoiceButtons } from "@/components";
 import { SongCard } from "@/components/SongCard";
+import { BREAKPOINT } from "@/constants";
 import { useSong } from "@/hooks";
 import { Voice } from "@/types";
 import { useRouter } from "next/router";
@@ -38,7 +39,7 @@ const SongPageContent = ({ songId }: Props) => {
   return (
     <PageContentStyled>
       <Header>
-        <SongCard song={data} small hideTitle />
+        <SongCardStyled song={data} small hideTitle />
         <Title>{name}</Title>
         <QrCodeStyled url={window.location.href} />
       </Header>
@@ -75,9 +76,19 @@ const PageContentStyled = styled(PageContent)`
 const Header = styled.div`
   display: flex;
   align-items: center;
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    flex-direction: column;
+    text-align: center;
+  }
+`
+
+const SongCardStyled = styled(SongCard)`
+  order: 0;
 `
 
 const Title = styled.h1`
+  order: 1;
   margin-left: 32px;
   margin-right: 16px;
 `
@@ -98,6 +109,12 @@ const Image = styled.img`
 
 const QrCodeStyled = styled(QrCode)`
   flex-shrink: 0;
+  order: 3;
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    align-self: flex-end;
+    order: -1;
+  }
 `
 
 const AudioBarStyled = styled(AudioBar)`

@@ -1,3 +1,4 @@
+import { BREAKPOINT } from '@/constants'
 import styled from 'styled-components'
 
 export const Page = styled.main`
@@ -6,7 +7,10 @@ export const Page = styled.main`
 
 export const PageContent = styled.div`
   margin: 0 auto;
-  padding: 64px 0;
-  width: 95%;
+  padding: 64px 16px;
   max-width: 1024px;
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    padding-top: 16px;
+  }
 `
