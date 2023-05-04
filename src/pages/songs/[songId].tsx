@@ -1,6 +1,7 @@
-import { AudioBar, Page, PageContent, QrCode } from "@/components";
+import { AudioBar, Page, PageContent, QrCode, VoiceButtons } from "@/components";
+import { SongCard } from "@/components/SongCard";
 import { useSong } from "@/hooks";
-import { VOICES, Voice } from "@/types";
+import { Voice } from "@/types";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from 'styled-components'
@@ -35,19 +36,24 @@ const SongPageContent = ({ songId }: Props) => {
   const selectedVoiceFile = selectedVoice && googleFileUrl(voiceFiles[selectedVoice])
 
   return (
-    <PageContent>
-      <Title>{name}</Title>
-      <QrCode url={'http://localhost:3000/songs/1TzuKPNeGFEx-owCFI-gUYJCdCem-GJja'} />
-      {VOICES.map(voice => (
-        <button key={voice} onClick={() => setSelectedVoice(voice)} disabled={!voiceFiles[voice]}>{voice}</button>
-      ))}
+    <PageContentStyled>
+      <Header>
+        <SongCard song={data} small hideTitle />
+        <Title>{name}</Title>
+        <QrCode url={'http://localhost:3000/songs/1TzuKPNeGFEx-owCFI-gUYJCdCem-GJja'} />
+      </Header>
+      <VoiceButtons
+        voiceFiles={voiceFiles}
+        selectedVoice={selectedVoice}
+        onVoiceChange={setSelectedVoice}
+      />
       <Gallery>
         {imageFiles.map((fileId, idx) => (
           <Image key={fileId} src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${idx + 1}`} />
         ))}
       </Gallery>
       <AudioBar fileUrl={selectedVoiceFile} />
-    </PageContent>
+    </PageContentStyled>
   )
 }
 
@@ -60,7 +66,21 @@ function googleFileUrl(fileId: string | undefined) {
   return `${GOOGLE_FILE_BASE_URL}&id=${fileId}`
 }
 
-const Title = styled.h1``
+const PageContentStyled = styled(PageContent)`
+  display: flex;
+  flex-direction: column;
+  row-gap: 32px;
+`
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const Title = styled.h1`
+  margin-left: 32px;
+  margin-right: 16px;
+`
 
 const Gallery = styled.div`
   margin: 0 auto;
