@@ -58,17 +58,17 @@ const VoiceButton = styled.button<{ selected?: boolean }>`
   gap: 16px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${props => props.selected ? COLORS.accent : COLORS.border};
+  border-color: ${({ selected, disabled }) => disabled ? COLORS.disabled : selected ? COLORS.accent : COLORS.border};
   border-radius: 4px;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   font-size: 24px;
   font-family: ${lato.style.fontFamily};
-  color: ${props => props.selected ? COLORS.accent : COLORS.primary};
+  color: ${({ selected, disabled }) => disabled ? COLORS.disabled : selected ? COLORS.accent : COLORS.primary};
   background-color: ${COLORS.background};
 
   transition: all 0.3s ease-out;
 
   &:hover {
-    border-color: ${props => props.selected ? COLORS.accent : COLORS.primary};
+    border-color: ${({ selected, disabled }) => disabled ? COLORS.disabled : selected ? COLORS.accent : COLORS.primary};
   }
 `
