@@ -1,5 +1,7 @@
+import { useAudio } from "@/hooks"
 import { COLORS } from "@/utils/colors"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { formatTime } from "@/utils/formatTime"
+import { ChangeEvent, SyntheticEvent, useCallback, useEffect } from "react"
 import { IoIosPause, IoIosPlay } from "react-icons/io"
 import { MdForward5, MdReplay5 } from 'react-icons/md'
 import styled, { css } from "styled-components"
@@ -10,24 +12,29 @@ interface Props {
 }
 
 export const AudioBar = ({ fileUrl, className }: Props) => {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const audioRef = useRef<HTMLAudioElement>(null)
+  const {
+    audioRef,
+    play,
+    pause,
+    updateAudioTime,
+    updateCurrentTime,
+    shiftAudioTime,
+    initAudio,
+    isPlaying,
+    currentTimePosition,
+    audioDuration
+  } = useAudio()
 
-  const play = useCallback(() => {
-    const audioElement = audioRef.current
-    if(audioElement) {
-      setIsPlaying(true)
-      audioElement.play()
-    }
-  }, [audioRef, setIsPlaying])
+  const fastForward = useCallback(() => shiftAudioTime(5), [shiftAudioTime])
+  const rewind = useCallback(() => shiftAudioTime(-5), [shiftAudioTime])
 
-  const pause = useCallback(() => {
-    const audioElement = audioRef.current
-    if(audioElement) {
-      setIsPlaying(false)
-      audioElement.pause()
-    }
-  }, [audioRef, setIsPlaying])
+  const handleAudioTimeChange = useCallback((event: SyntheticEvent<HTMLAudioElement>) => {
+    updateCurrentTime(event.currentTarget.currentTime)
+  }, [updateCurrentTime])
+
+  const handleSliderChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+    updateAudioTime(Number(event.target.value))
+  }, [updateAudioTime])
 
   useEffect(() => {
     const audioElement = audioRef.current
@@ -36,40 +43,42 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
     }
 
     try {
-      pause
+      pause()
       audioElement.load()
-      audioElement.addEventListener('loadedmetadata', play)
     } catch (error) {
       console.error(error)
     }
-  }, [fileUrl, audioRef, setIsPlaying, play, pause])
+  }, [fileUrl, audioRef, pause])
+
+  const isDisabled = !fileUrl
+  const timeTravelColor = isDisabled ? COLORS.disabled : COLORS.primary
 
   return (
     <Container className={className}>
-      <Audio ref={audioRef} controls hide={!fileUrl}>
+      <Audio ref={audioRef} controls hide={!fileUrl} onLoadedMetadata={initAudio} onTimeUpdate={handleAudioTimeChange}>
         {fileUrl && <source src={fileUrl} type="audio/mp3" />}
         <p>This browser does not support HTML5 audio</p>
       </Audio>
       <Controls>
-        <TimetravelButton>
-          <MdReplay5 size={48} />
+        <TimetravelButton disabled={isDisabled} onClick={rewind}>
+          <MdReplay5 color={timeTravelColor} size={48} />
         </TimetravelButton>
-        <PlayButton onClick={isPlaying ? pause : play}>
+        <PlayButton onClick={isPlaying ? pause : play} disabled={isDisabled}>
           {isPlaying ? (
             <IoIosPause color={COLORS.background} size={48} />
           ) : (
             <IoIosPlay color={COLORS.background} size={48} />
           )}
         </PlayButton>
-        <TimetravelButton>
-          <MdForward5 size={48} />
+        <TimetravelButton disabled={isDisabled} onClick={fastForward}>
+          <MdForward5 color={timeTravelColor} size={48} />
         </TimetravelButton>
       </Controls>
       <TimeIndicators>
-        <TimePlayed>0:33</TimePlayed>
-        <TimeLeft>-0:27</TimeLeft>
+        <TimeIndicator>{formatTime(currentTimePosition)}</TimeIndicator>
+        <TimeIndicator>-{formatTime(audioDuration - currentTimePosition)}</TimeIndicator>
       </TimeIndicators>
-      <Slider min={0} max={100} step={1} value={30} onChange={() => null} />
+      <Slider min={0} max={audioDuration} step={0.1} value={currentTimePosition} onChange={handleSliderChange} disabled={isDisabled} />
     </Container>
   )
 }
@@ -92,13 +101,13 @@ const Controls = styled.div`
   gap: 32px;
 `
 
-const iconButtonStyles = css`
+const iconButtonStyles = css<{ disabled?: boolean }>`
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
 `
 
 const PlayButton = styled.button`
@@ -106,7 +115,7 @@ const PlayButton = styled.button`
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background: ${COLORS.accent};
+  background: ${props => props.disabled ? COLORS.disabled : COLORS.accent};
 `
 
 const TimetravelButton = styled.button`
@@ -121,17 +130,11 @@ const TimeIndicators = styled.div`
   justify-content: space-between;
 `
 
-const TimePlayed = styled.span`
-  
-`
+const TimeIndicator = styled.span``
 
-const TimeLeft = styled.span`
-  
-`
-
-const sliderStyles = css`
+const sliderStyles = css<{ disabled?: boolean }>`
   height: 100%;
-  border: 1px solid ${COLORS.accent};
+  border: 1px solid ${props => props.disabled ? COLORS.disabled : COLORS.accent};
   background: ${COLORS.background};
 `
 
@@ -148,6 +151,7 @@ const thumbStyles = css`
   cursor: pointer;
 `
 
+// TODO: update styles accross different browsers
 const Slider = styled.input.attrs({ type: 'range' })`
   height: 64px;
   width: 100%;
