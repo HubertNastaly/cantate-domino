@@ -30,7 +30,7 @@ const InputWrapper = styled.div`
   padding: 8px 16px;
   box-sizing: border-box;
   border-radius: 4px;
-  border: 1px solid #cccccc;
+  border: 1px solid ${COLORS.border};
 
   &:focus {
     border-color: ${COLORS.primary};

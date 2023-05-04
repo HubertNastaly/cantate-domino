@@ -1,4 +1,5 @@
 import { Page, PageContent, SearchBar, Songs } from '@/components'
+import { BREAKPOINT } from '@/constants'
 import { useElementWidth } from '@/hooks'
 import Head from 'next/head'
 import { useState } from 'react'
@@ -37,7 +38,7 @@ const Title = styled.h1`
   font-size: 96px;
   font-weight: 300;
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
     font-size: 72px;
   }
 `

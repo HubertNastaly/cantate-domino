@@ -25,7 +25,9 @@ export const Songs = ({ className, width, filterText }: Props) => {
         {data?.pages.map(({ songs }, idx) => (
           <Fragment key={`page-${idx}`}>
             {songs.map(song => (
-              <SongCard key={song.id} song={song}  />
+              <li key={song.id}>
+                <SongCard song={song} clickable />
+              </li>
             ))}
           </Fragment>
         ))}

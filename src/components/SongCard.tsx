@@ -5,19 +5,31 @@ import { toSvg } from 'jdenticon'
 import { COLORS } from "@/utils/colors"
 import { CARD_SIZE } from "@/constants"
 
-const ICON_SIZE = 0.9 * CARD_SIZE
-
 interface Props {
   song: Song
+  small?: boolean
+  clickable?: boolean
+  hideTitle?: boolean
 }
 
-export const SongCard = ({ song: { id, name } }: Props) => {
+export const SongCard = ({ song: { id, name }, small, clickable, hideTitle }: Props) => {
+  const cardSize = small ? CARD_SIZE.small : CARD_SIZE.big
+  const iconSize = 0.9 * cardSize
+
+  const content = () => (
+    <>
+      <Cover size={cardSize} dangerouslySetInnerHTML={{ __html: toSvg(id, iconSize) }} />
+      {!hideTitle && <Title>{name}</Title>}
+    </>
+  )
+
   return (
-    <Container>
-      <SongLink href={`/songs/${id}`}>
-        <Cover dangerouslySetInnerHTML={{ __html: toSvg(id, ICON_SIZE) }} />
-        <Title>{name}</Title>
-      </SongLink>
+    <Container size={cardSize}>
+      {clickable ? (
+        <SongLink href={`/songs/${id}`}>
+          {content()}
+        </SongLink>
+      ) : content()}
     </Container>
   )
 }
@@ -34,10 +46,9 @@ export const smallShadow = css`
   box-shadow: 2px 2px 21px -14px rgba(66, 68, 90, 1);
 `
 
-export const Cover = styled.div`
-  width: ${CARD_SIZE}px;
-  height: ${CARD_SIZE}px;
-
+export const Cover = styled.div<{ size: number }>`
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,15 +73,17 @@ const Title = styled.span`
   color: ${COLORS.primary};
 `
 
-const Container = styled.li`
-  width: ${CARD_SIZE}px;
-  cursor: pointer;
+const Container = styled.div<{ size: number, clickable?: boolean }>`
+  width: ${props => props.size}px;
+  cursor: ${props => props.clickable ? 'pointer' : 'unset'};
 
-  &:hover {
-    & ${Cover} {
-      ${smallShadow}
+  ${props => props.clickable ? `
+    &:hover {
+      & ${Cover} {
+        ${smallShadow}
+      }
     }
-  }
+  ` : ''}
 `
 
 const SongLink = styled(Link)`
