@@ -1,5 +1,5 @@
 import { COLORS } from "@/utils/colors"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { IoIosPause, IoIosPlay } from "react-icons/io"
 import { MdForward5, MdReplay5 } from 'react-icons/md'
 import styled, { css } from "styled-components"
@@ -13,6 +13,22 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
+  const play = useCallback(() => {
+    const audioElement = audioRef.current
+    if(audioElement) {
+      setIsPlaying(true)
+      audioElement.play()
+    }
+  }, [audioRef, setIsPlaying])
+
+  const pause = useCallback(() => {
+    const audioElement = audioRef.current
+    if(audioElement) {
+      setIsPlaying(false)
+      audioElement.pause()
+    }
+  }, [audioRef, setIsPlaying])
+
   useEffect(() => {
     const audioElement = audioRef.current
     if(!audioElement) {
@@ -20,14 +36,13 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
     }
 
     try {
-      audioElement.pause()
+      pause
       audioElement.load()
-      setIsPlaying(true)
-      audioElement.addEventListener('loadedmetadata', audioElement.play)
+      audioElement.addEventListener('loadedmetadata', play)
     } catch (error) {
       console.error(error)
     }
-  }, [fileUrl, audioRef, setIsPlaying])
+  }, [fileUrl, audioRef, setIsPlaying, play, pause])
 
   return (
     <Container className={className}>
@@ -39,7 +54,7 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
         <TimetravelButton>
           <MdReplay5 size={48} />
         </TimetravelButton>
-        <PlayButton>
+        <PlayButton onClick={isPlaying ? pause : play}>
           {isPlaying ? (
             <IoIosPause color={COLORS.background} size={48} />
           ) : (
@@ -79,6 +94,9 @@ const Controls = styled.div`
 
 const iconButtonStyles = css`
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   cursor: pointer;
 `
