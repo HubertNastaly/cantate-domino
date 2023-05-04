@@ -52,7 +52,7 @@ const SongPageContent = ({ songId }: Props) => {
           <Image key={fileId} src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${idx + 1}`} />
         ))}
       </Gallery>
-      <AudioBar fileUrl={selectedVoiceFile} />
+      <AudioBarStyled fileUrl={selectedVoiceFile} />
     </PageContentStyled>
   )
 }
@@ -95,6 +95,15 @@ const Image = styled.img`
   max-width: 100%;
   max-height: 90vh;
 `
+
 const QrCodeStyled = styled(QrCode)`
   flex-shrink: 0;
+`
+
+const AudioBarStyled = styled(AudioBar)`
+  padding: 8px;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 `
