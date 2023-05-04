@@ -55,7 +55,7 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
 
   return (
     <Container className={className}>
-      <Audio ref={audioRef} controls hide={!fileUrl} onLoadedMetadata={initAudio} onTimeUpdate={handleAudioTimeChange}>
+      <Audio ref={audioRef} hide={!fileUrl} onLoadedMetadata={initAudio} onTimeUpdate={handleAudioTimeChange}>
         {fileUrl && <source src={fileUrl} type="audio/mp3" />}
         <p>This browser does not support HTML5 audio</p>
       </Audio>
