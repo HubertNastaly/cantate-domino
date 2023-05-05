@@ -159,9 +159,10 @@ const progressStyles = css`
   background-color: ${COLORS.accent};
 `
 
-const thumbStyles = css`
+const thumbStyles = css<{ disabled?: boolean }>`
   width: 8px;
   height: 100%;
+  display: ${props => props.disabled ? 'none' : 'block'};
   border: 1px solid ${COLORS.accent};
   background: ${COLORS.background};
   cursor: grabbing;
