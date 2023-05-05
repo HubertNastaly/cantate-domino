@@ -1,4 +1,4 @@
-import { AudioBar, Gallery, Page, PageContent, QrCode, VoiceButtons } from "@/components";
+import { AudioBar, Gallery, Page, PageContent, QrCode, SongPageLoader, VoiceButtons } from "@/components";
 import { SongCard } from "@/components/SongCard";
 import { BREAKPOINT } from "@/constants";
 import { useSong } from "@/hooks";
@@ -31,7 +31,7 @@ const SongPageContent = ({ songId }: Props) => {
   const [selectedVoice, setSelectedVoice] = useState<Voice>()
 
   if(isLoading || !data) {
-    return <span>Loading...</span>
+    return <SongPageLoader songId={songId} />
   }
   
   const { voiceFiles, name, imageFiles, pdfFiles } = data

@@ -25,7 +25,7 @@ export const SongCard = ({ song: { id, name }, small, clickable, hideTitle, clas
   )
 
   return (
-    <Container size={cardSize} className={className}>
+    <Container size={cardSize} className={className} clickable={clickable}>
       {clickable ? (
         <SongLink href={`/songs/${id}`}>
           {content()}
@@ -63,8 +63,6 @@ export const Cover = styled.div<{ size: number }>`
   & path {
     fill: ${COLORS.accent};
   }
-
-  ${bigShadow}
 `
 
 const Title = styled.span`
@@ -77,6 +75,10 @@ const Title = styled.span`
 const Container = styled.div<{ size: number, clickable?: boolean }>`
   width: ${props => props.size}px;
   cursor: ${props => props.clickable ? 'pointer' : 'unset'};
+
+  & ${Cover} {
+    ${bigShadow}
+  }
 
   ${props => props.clickable ? `
     &:hover {
