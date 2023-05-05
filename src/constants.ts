@@ -8,3 +8,4 @@ export const BREAKPOINT = {
   mobile: 480,
   tablet: 768,
 }
+export const PAGE_CONTENT_WIDTH = 1024
