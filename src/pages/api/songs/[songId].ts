@@ -50,8 +50,6 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
   const pdfFiles = getFilesWithExtension(files, ['.pdf'])
   const imageFiles = getFilesWithExtension(files, ['.png', '.jpg'])
 
-  console.log({ pdfFiles, imageFiles })
-
   res.status(200).send({
     id: songId,
     name,

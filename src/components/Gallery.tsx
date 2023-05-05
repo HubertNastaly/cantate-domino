@@ -4,6 +4,8 @@ import { BREAKPOINT } from "@/constants"
 import { googleFileUrl } from "@/utils/googleFileUrl"
 import { MdZoomIn } from "react-icons/md"
 import { COLORS } from "@/utils/colors"
+import { useState } from "react"
+import { GiMusicalScore } from "react-icons/gi"
 
 interface Props {
   songName: string
@@ -46,12 +48,19 @@ interface NotesImageProps {
   fileId: string
   fileIndex: number
   name: string
-  fullScreen?: boolean 
+  fullScreen?: boolean
 }
 
 const NotesImage = ({ fileId, name, fileIndex, fullScreen }: NotesImageProps) => {
+  const [isLoading, setIsLoading] = useState(true)
+
   return (
-    <Image src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${fileIndex + 1}`} fullScreen={fullScreen} />
+    <>
+      <ImagePlaceholder hidden={!isLoading}>
+        <MusicScoreIcon color={COLORS.border} size={48} />
+      </ImagePlaceholder>
+      <Image src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${fileIndex + 1}`} fullScreen={fullScreen} onLoad={() => setIsLoading(false)} hidden={isLoading} />
+    </>
   )
 }
 
@@ -127,4 +136,53 @@ const Image = styled.img<{ fullScreen?: boolean }>`
 
   filter: grayscale(100%);
   object-fit: contain;
+`
+
+const rotate = keyframes`
+  100% {
+		transform: rotate(1turn);
+	}
+`
+
+const ImagePlaceholder = styled.div`
+  position: relative;
+  width: 100%;
+  height: 320px;
+  display: ${props => props.hidden ? 'none' : 'flex'};
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 1000px;
+    height: 1000px;
+    background: ${COLORS.border};
+    background: linear-gradient(${COLORS.border} 0 45%, ${COLORS.background} 45%, ${COLORS.background} 55%, ${COLORS.border} 55% 100%);
+
+    animation: ${rotate} 5s linear infinite;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    z-index: 2;
+    width: calc(100% - 2px);
+    height: 318px;
+    background: ${COLORS.background};
+  }
+`
+
+const MusicScoreIcon = styled(GiMusicalScore)`
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
