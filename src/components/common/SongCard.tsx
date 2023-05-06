@@ -39,7 +39,7 @@ const Content = styled.div<{ column?: boolean }>`
   display: flex;
   flex-direction: ${props => props.column ? 'column' : 'row'};
   align-items: center;
-  row-gap: 16px;
+  gap: 16px;
 `
 
 export const bigShadow = css`
