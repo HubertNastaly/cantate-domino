@@ -11,7 +11,7 @@ export const SongPageLoader = ({ songId }: Props) => {
     <Container>
       <SongCardAnimated
         song={{ id: songId, name: '' }}
-        small
+        size="small"
         titlePlacement="none"
       />
     </Container>

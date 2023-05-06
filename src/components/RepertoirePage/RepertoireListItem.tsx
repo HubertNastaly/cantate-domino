@@ -1,4 +1,4 @@
-import { RepertoireItem } from '@/types'
+import { RepertoireItem, Song } from '@/types'
 import styled from 'styled-components'
 import { Cover, SongCard } from '../common'
 import { CARD_SIZE } from '@/constants'
@@ -14,20 +14,20 @@ const REPERTOIRE_ITEM_NAMES: Record<RepertoireItem, string> = {
 
 interface Props {
   label: RepertoireItem
-  songId: string | undefined
+  song: Song | undefined
 }
 
-export const RepertoireListItem = ({ label, songId }: Props) => {
+export const RepertoireListItem = ({ label, song }: Props) => {
   return (
     <ListItem>
       <Label>{REPERTOIRE_ITEM_NAMES[label]}</Label>
-      {!songId ? (
-        <Cover size={CARD_SIZE.small} />
+      {!song ? (
+        <Cover size={CARD_SIZE.tiny} />
       ) : (
         <SongCardStyled
-          song={{ id: songId, name: 'Placeholder name' }}
+          song={song}
           titlePlacement="right"
-          small
+          size="tiny"
           clickable
         />
       )}
@@ -39,7 +39,8 @@ const ListItem = styled.li``
 
 const Label = styled.h3`
   font-weight: 300;
-  margin-bottom: 16px;
+  font-size: 16px;
+  margin-bottom: 8px;
 `
 
 const SongCardStyled = styled(SongCard)`

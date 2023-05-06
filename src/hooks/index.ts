@@ -4,4 +4,4 @@ export * from './useInfiniteScroll'
 export * from './useElementWidth'
 export * from './useOutsideClick'
 export * from './useAudio'
-
+export * from './useRepertoire'

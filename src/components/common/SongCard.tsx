@@ -7,14 +7,14 @@ import { CARD_SIZE } from "@/constants"
 
 interface Props {
   song: Song
-  small?: boolean
+  size: keyof typeof CARD_SIZE
   clickable?: boolean
   titlePlacement?: 'bottom' | 'right' | 'none'
   className?: string
 }
 
-export const SongCard = ({ song: { id, name }, small, clickable, titlePlacement = 'bottom', className }: Props) => {
-  const cardSize = small ? CARD_SIZE.small : CARD_SIZE.big
+export const SongCard = ({ song: { id, name }, size, clickable, titlePlacement = 'bottom', className }: Props) => {
+  const cardSize = CARD_SIZE[size]
   const iconSize = 0.9 * cardSize
 
   const content = () => (
