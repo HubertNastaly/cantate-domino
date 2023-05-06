@@ -1,5 +1,5 @@
-import styled, { keyframes } from "styled-components"
-import { Cover, SongCard, smallShadow } from "./SongCard"
+import styled from "styled-components"
+import { Cover, SongCard, smallShadow } from "@/components/common"
 import { rotate } from "@/utils/animations"
 
 interface Props {

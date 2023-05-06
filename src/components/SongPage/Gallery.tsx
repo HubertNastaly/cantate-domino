@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components"
-import { Modal } from "./Modal"
+import { Modal } from "@/components/common"
 import { BREAKPOINT } from "@/constants"
 import { googleFileUrl } from "@/utils/googleFileUrl"
 import { MdZoomIn } from "react-icons/md"

@@ -1,5 +1,5 @@
 import { CARD_SIZE } from "@/constants"
-import { Cover, bigShadow, smallShadow } from "./SongCard"
+import { Cover, bigShadow, smallShadow } from "@/components/common"
 import styled, { keyframes } from 'styled-components'
 
 interface Props {

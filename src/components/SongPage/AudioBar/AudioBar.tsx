@@ -1,11 +1,10 @@
 import { useAudio } from "@/hooks"
 import { COLORS } from "@/utils/colors"
 import { formatTime } from "@/utils/formatTime"
-import { ChangeEvent, SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react"
-import { IoIosPause, IoIosPlay } from "react-icons/io"
+import { ChangeEvent, SyntheticEvent, useCallback, useEffect, useMemo } from "react"
 import { MdForward5, MdReplay5 } from 'react-icons/md'
 import styled, { css, keyframes } from "styled-components"
-import { bigShadow } from "./SongCard"
+import { bigShadow } from "@/components/common"
 import { PAGE_CONTENT_WIDTH } from "@/constants"
 import { PlayButton, iconButtonStyles } from "./PlayButton"
 

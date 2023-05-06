@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { MdQrCode } from "react-icons/md"
 import { QRCodeSVG } from 'qrcode.react'
-import { Modal } from "./Modal"
+import { Modal } from "@/components/common"
 
 interface Props {
   url: string

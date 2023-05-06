@@ -1,6 +1,6 @@
 import { useInfiniteScroll, useSongs } from "@/hooks"
 import { Fragment } from "react"
-import { SongCard } from "./SongCard"
+import { SongCard } from "@/components/common"
 import styled from "styled-components"
 import { COLUMN_GAP } from "@/constants"
 import { cardsNumberInRow } from "@/utils/cardsNumberInRow"

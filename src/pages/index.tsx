@@ -1,4 +1,5 @@
-import { Page, PageContent, SearchBar, Songs } from '@/components'
+import { Songs } from '@/components'
+import { Page, PageContent, SearchBar } from '@/components/common'
 import { BREAKPOINT } from '@/constants'
 import { useElementWidth } from '@/hooks'
 import Head from 'next/head'
