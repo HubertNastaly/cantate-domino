@@ -3,5 +3,5 @@ export const COLORS = {
   background: 'white',
   accent: '#BD0021',
   border: '#CCCCCC',
-  disabled: '#888888'
+  disabled: '#BBBBBB'
 }
