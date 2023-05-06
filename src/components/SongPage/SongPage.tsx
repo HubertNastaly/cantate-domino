@@ -44,7 +44,7 @@ const SongPageContent = ({ songId }: Props) => {
   return (
     <PageContentStyled>
       <Header>
-        <SongCardStyled song={data} small hideTitle />
+        <SongCardStyled song={data} size="small" titlePlacement="none" />
         <Title>{name}</Title>
         <QrCodeStyled url={window.location.href} />
       </Header>

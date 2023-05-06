@@ -7,21 +7,21 @@ import { CARD_SIZE } from "@/constants"
 
 interface Props {
   song: Song
-  small?: boolean
+  size: keyof typeof CARD_SIZE
   clickable?: boolean
-  hideTitle?: boolean
+  titlePlacement?: 'bottom' | 'right' | 'none'
   className?: string
 }
 
-export const SongCard = ({ song: { id, name }, small, clickable, hideTitle, className }: Props) => {
-  const cardSize = small ? CARD_SIZE.small : CARD_SIZE.big
+export const SongCard = ({ song: { id, name }, size, clickable, titlePlacement = 'bottom', className }: Props) => {
+  const cardSize = CARD_SIZE[size]
   const iconSize = 0.9 * cardSize
 
   const content = () => (
-    <>
+    <Content column={titlePlacement === 'bottom'}>
       <Cover size={cardSize} dangerouslySetInnerHTML={{ __html: toSvg(id, iconSize) }} />
-      {!hideTitle && <Title>{name}</Title>}
-    </>
+      {titlePlacement !== 'none' && <Title>{name}</Title>}
+    </Content>
   )
 
   return (
@@ -34,6 +34,13 @@ export const SongCard = ({ song: { id, name }, small, clickable, hideTitle, clas
     </Container>
   )
 }
+
+const Content = styled.div<{ column?: boolean }>`
+  display: flex;
+  flex-direction: ${props => props.column ? 'column' : 'row'};
+  align-items: center;
+  gap: 16px;
+`
 
 export const bigShadow = css`
   -webkit-box-shadow: 6px 6px 21px -10px rgba(66, 68, 90, 1);
@@ -90,9 +97,5 @@ const Container = styled.div<{ size: number, clickable?: boolean }>`
 `
 
 const SongLink = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 16px;
   text-decoration: none;
 `
