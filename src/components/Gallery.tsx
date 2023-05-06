@@ -6,6 +6,7 @@ import { MdZoomIn } from "react-icons/md"
 import { COLORS } from "@/utils/colors"
 import { useState } from "react"
 import { GiMusicalScore } from "react-icons/gi"
+import { rotate } from "@/utils/animations"
 
 interface Props {
   songName: string
@@ -136,12 +137,6 @@ const Image = styled.img<{ fullScreen?: boolean }>`
 
   filter: grayscale(100%);
   object-fit: contain;
-`
-
-const rotate = keyframes`
-  100% {
-		transform: rotate(1turn);
-	}
 `
 
 const ImagePlaceholder = styled.div`

@@ -1,8 +1,10 @@
 import { clamp } from "@/utils/clamp"
 import { useCallback, useRef, useState } from "react"
 
+export type AudioState = 'playing' | 'paused' | 'loading'
+
 export function useAudio() {
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [audioState, setAudioState] = useState<AudioState>('loading')
   const [audioDuration, setAudioDuration] = useState<number>(0)
   const [currentTimePosition, setCurrentTimePosition] = useState<number>(0)
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -10,27 +12,26 @@ export function useAudio() {
   const play = useCallback(() => {
     const audioElement = audioRef.current
     if(audioElement) {
-      setIsPlaying(true)
+      setAudioState('playing')
       audioElement.play()
     }
-  }, [audioRef, setIsPlaying])
+  }, [audioRef, setAudioState])
 
   const pause = useCallback(() => {
     const audioElement = audioRef.current
     if(audioElement) {
-      setIsPlaying(false)
+      setAudioState('paused')
       audioElement.pause()
     }
-  }, [audioRef, setIsPlaying])
+  }, [audioRef, setAudioState])
 
   const initAudio = useCallback(() => {
     const audioElement = audioRef.current
     if(audioElement) {
-      setIsPlaying(true)
       setAudioDuration(audioElement.duration)
       audioElement.play()
     }
-  }, [audioRef])
+  }, [audioRef, setAudioDuration])
 
   const updateCurrentTime = useCallback((newTimePosition: number) => {
     const audioElement = audioRef.current
@@ -60,7 +61,8 @@ export function useAudio() {
     updateCurrentTime,
     updateAudioTime,
     shiftAudioTime,
-    isPlaying,
+    audioState,
+    setAudioState,
     currentTimePosition,
     audioRef,
     audioDuration

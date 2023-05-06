@@ -1,12 +1,13 @@
 import { useAudio } from "@/hooks"
 import { COLORS } from "@/utils/colors"
 import { formatTime } from "@/utils/formatTime"
-import { ChangeEvent, SyntheticEvent, useCallback, useEffect, useMemo } from "react"
+import { ChangeEvent, SyntheticEvent, useCallback, useEffect, useMemo, useState } from "react"
 import { IoIosPause, IoIosPlay } from "react-icons/io"
 import { MdForward5, MdReplay5 } from 'react-icons/md'
-import styled, { css } from "styled-components"
+import styled, { css, keyframes } from "styled-components"
 import { bigShadow } from "./SongCard"
 import { PAGE_CONTENT_WIDTH } from "@/constants"
+import { PlayButton, iconButtonStyles } from "./PlayButton"
 
 interface Props {
   className?: string
@@ -22,7 +23,8 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
     updateCurrentTime,
     shiftAudioTime,
     initAudio,
-    isPlaying,
+    audioState,
+    setAudioState,
     currentTimePosition,
     audioDuration
   } = useAudio()
@@ -38,6 +40,8 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
     updateAudioTime(Number(event.target.value))
   }, [updateAudioTime])
 
+  const handleDataLoaded = useCallback(() => setAudioState('playing'), [setAudioState])
+
   useEffect(() => {
     const audioElement = audioRef.current
     if(!audioElement) {
@@ -46,21 +50,26 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
 
     try {
       pause()
+      setAudioState('loading')
       audioElement.load()
     } catch (error) {
       console.error(error)
     }
-  }, [fileUrl, audioRef, pause])
+  }, [fileUrl, audioRef, pause, setAudioState])
 
-  const isDisabled = !fileUrl
+  const isDisabled = !fileUrl || audioState === 'loading'
   const timeTravelColor = isDisabled ? COLORS.disabled : COLORS.primary
 
   const formattedAudioDuration = useMemo(() => formatTime(audioDuration), [audioDuration])
 
+  if(!fileUrl) {
+    return null
+  }
+
   return (
     <Container className={className}>
       <Content>
-        <Audio ref={audioRef} hide={!fileUrl} onLoadedMetadata={initAudio} onTimeUpdate={handleAudioTimeChange}>
+        <Audio ref={audioRef} hide={!fileUrl} onLoadedMetadata={initAudio} onLoadedData={handleDataLoaded} onTimeUpdate={handleAudioTimeChange}>
           {fileUrl && <source src={fileUrl} type="audio/mp3" />}
           <p>This browser does not support HTML5 audio</p>
         </Audio>
@@ -68,13 +77,10 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
           <TimetravelButton disabled={isDisabled} onClick={rewind}>
             <MdReplay5 color={timeTravelColor} size={48} />
           </TimetravelButton>
-          <PlayButton onClick={isPlaying ? pause : play} disabled={isDisabled}>
-            {isPlaying ? (
-              <IoIosPause color={COLORS.background} size={48} />
-            ) : (
-              <IoIosPlay color={COLORS.background} size={48} />
-            )}
-          </PlayButton>
+          <PlayButton
+            state={audioState}
+            onClick={audioState === 'playing' ? pause : play}
+          />
           <TimetravelButton disabled={isDisabled} onClick={fastForward}>
             <MdForward5 color={timeTravelColor} size={48} />
           </TimetravelButton>
@@ -89,11 +95,25 @@ export const AudioBar = ({ fileUrl, className }: Props) => {
   )
 }
 
+const slideIn = keyframes`
+  from {
+    transform: translateY(256px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`
+
 const Container = styled.div`
   width: 100%;
   background-color: ${COLORS.background};
 
   ${bigShadow}
+
+  animation: ${slideIn} 0.3s ease-out;
 `
 
 const Content = styled.div`
@@ -114,23 +134,6 @@ const Controls = styled.div`
   display: flex;
   align-items: center;
   gap: 32px;
-`
-
-const iconButtonStyles = css<{ disabled?: boolean }>`
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-`
-
-const PlayButton = styled.button`
-  ${iconButtonStyles}
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: ${props => props.disabled ? COLORS.disabled : COLORS.accent};
 `
 
 const TimetravelButton = styled.button`
@@ -163,10 +166,11 @@ const thumbStyles = css<{ disabled?: boolean }>`
   width: 8px;
   height: 100%;
   display: ${props => props.disabled ? 'none' : 'block'};
-  border: 1px solid ${COLORS.accent};
+  box-sizing: border-box;
+  border: 1px solid ${props => props.disabled ? COLORS.disabled : COLORS.accent};
+  border-radius: 0;
   background: ${COLORS.background};
   cursor: grabbing;
-  transform: translateX(8px);
 `
 
 // TODO: update styles accross different browsers

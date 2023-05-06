@@ -1,5 +1,6 @@
 import styled, { keyframes } from "styled-components"
 import { Cover, SongCard, smallShadow } from "./SongCard"
+import { rotate } from "@/utils/animations"
 
 interface Props {
   songId: string
@@ -23,12 +24,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
-
-const rotate = keyframes`
-  to {
-    transform: rotate(1turn);
-  }
 `
 
 const SongCardAnimated = styled(SongCard)`
