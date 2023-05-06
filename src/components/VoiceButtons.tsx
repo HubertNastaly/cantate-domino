@@ -71,4 +71,8 @@ const VoiceButton = styled.button<{ selected?: boolean }>`
   &:hover {
     border-color: ${({ selected, disabled }) => disabled ? COLORS.disabled : selected ? COLORS.accent : COLORS.primary};
   }
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    flex-direction: column;
+  }
 `
