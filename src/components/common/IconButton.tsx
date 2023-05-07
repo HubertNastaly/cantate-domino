@@ -1,3 +1,4 @@
+import { COLORS } from "@/utils/colors";
 import styled from "styled-components";
 
 export const IconButton = styled.button<{ size: number }>`
@@ -9,6 +10,6 @@ export const IconButton = styled.button<{ size: number }>`
   box-sizing: border-box;
   border: none;
   border-radius: 50%;
-  background: #eeeeee;
+  background: ${COLORS.faded};
   cursor: pointer;
 `

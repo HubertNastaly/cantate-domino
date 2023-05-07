@@ -58,7 +58,7 @@ const NotesImage = ({ fileId, name, fileIndex, fullScreen }: NotesImageProps) =>
   return (
     <>
       <ImagePlaceholder hidden={!isLoading}>
-        <MusicScoreIcon color={COLORS.border} size={48} />
+        <MusicScoreIcon color={COLORS.faded} size={48} />
       </ImagePlaceholder>
       <Image src={googleFileUrl(fileId)} alt={`Nuty do "${name}", strona ${fileIndex + 1}`} fullScreen={fullScreen} onLoad={() => setIsLoading(false)} hidden={isLoading} />
     </>
@@ -155,8 +155,8 @@ const ImagePlaceholder = styled.div`
     z-index: -1;
     width: 1000px;
     height: 1000px;
-    background: ${COLORS.border};
-    background: linear-gradient(${COLORS.border} 0 45%, ${COLORS.background} 45%, ${COLORS.background} 55%, ${COLORS.border} 55% 100%);
+    background: ${COLORS.faded};
+    background: linear-gradient(${COLORS.faded} 0 45%, ${COLORS.background} 45%, ${COLORS.background} 55%, ${COLORS.faded} 55% 100%);
 
     animation: ${rotate} 5s linear infinite;
   }
