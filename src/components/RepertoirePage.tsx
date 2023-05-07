@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 import { Page, PageContent, PageTitle, RepertoireList, RepertoireListItem } from "@/components/common"
-import { REPERTOIRE_CONFIG_REGEX } from "@/constants"
+import { REPERTOIRE_CONFIG_REGEX, REPERTOIRE_ITEM_NAMES } from "@/constants"
 import { parseRepertoireConfig } from "@/utils/parseRepertoireConfig"
 import { useRepertoire } from "@/hooks"
 
@@ -27,11 +27,11 @@ const Repertoire = ({ config }: Props) => {
       <PageContent>
         <PageTitle>Repertuar</PageTitle>
         <RepertoireList>
-          {parsedConfig.map(([label, songId], idx) => (
+          {parsedConfig.map(([repertoireItem, songId], idx) => (
             <RepertoireListItem
               key={`${songId}-${idx}`}
-              label={label}
-              song={repertoire?.[label]}
+              label={REPERTOIRE_ITEM_NAMES[repertoireItem]}
+              song={repertoire?.[repertoireItem]}
               onRemove={() => null}
             />
           ))}

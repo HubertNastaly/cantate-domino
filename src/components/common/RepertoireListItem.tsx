@@ -5,17 +5,8 @@ import { MdDelete } from 'react-icons/md'
 import { Cover, SongCard } from './SongCard'
 import { IconButton } from './IconButton'
 
-const REPERTOIRE_ITEM_NAMES: Record<RepertoireItem, string> = {
-  mess: 'Msza',
-  opening: 'Wejście',
-  sacrifice: 'Ofiarowanie',
-  communion: 'Komunia',
-  adoration: 'Uwielbienie',
-  ending: 'Wyjście'
-}
-
 interface Props {
-  label: RepertoireItem
+  label: string
   song: Song | undefined
   onRemove?: () => void
 }
@@ -23,7 +14,7 @@ interface Props {
 export const RepertoireListItem = ({ label, song, onRemove }: Props) => {
   return (
     <ListItem>
-      <Label>{REPERTOIRE_ITEM_NAMES[label]}</Label>
+      <RepertoireItemLabel>{label}</RepertoireItemLabel>
       <Row>
         {!song ? (
           <Cover size={CARD_SIZE.tiny} />
@@ -47,9 +38,9 @@ export const RepertoireListItem = ({ label, song, onRemove }: Props) => {
 
 const ListItem = styled.li``
 
-const Label = styled.h3`
+export const RepertoireItemLabel = styled.h3`
   font-weight: 300;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 8px;
 `
 
