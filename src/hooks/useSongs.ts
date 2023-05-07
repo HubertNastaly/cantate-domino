@@ -9,21 +9,18 @@ interface PageParam {
   songs: Song[]
 }
 
-const ROWS_PER_CHUNK = 5
 const API_URL = `/api/songs/all`
 
-export const useSongs = (cardsInRow: number = 0, filterText = '') => {
-  const songsPerChunk = ROWS_PER_CHUNK * cardsInRow
-
+export const useSongs = (songsPerPage: number = 0, filterText = '', onlyOnSearch = false) => {
   const fetchNextSongsChunk = useCallback(async (pageParam: PageParam | undefined, filterText: string): Promise<PageParam> => {
-    if(songsPerChunk === 0) {
+    if(songsPerPage === 0) {
       return {
         songs: [],
         nextPageToken: null
       }
     }
     const { nextPageToken } = pageParam ?? {}
-    const basicPath = `${API_URL}/${songsPerChunk}/${filterText || EMPTY_FILTER_CHAR}`
+    const basicPath = `${API_URL}/${songsPerPage}/${filterText || EMPTY_FILTER_CHAR}`
     const { data, status } = await axios.get<PageParam>(nextPageToken ? `${basicPath}/${nextPageToken}` : basicPath)
     if(status === 200) {
       return {
@@ -33,7 +30,7 @@ export const useSongs = (cardsInRow: number = 0, filterText = '') => {
     } else {
       throw new Error(`Response: ${status}`)
     }
-  }, [songsPerChunk])
+  }, [songsPerPage])
 
   const queryResult = useInfiniteQuery<PageParam>({
     queryKey: ['fetchSongs'],
@@ -43,7 +40,8 @@ export const useSongs = (cardsInRow: number = 0, filterText = '') => {
         return false
       }
       return lastPage
-    }
+    },
+    enabled: !onlyOnSearch || !!filterText
   })
 
   const fetchNextPage = useCallback(() => {
@@ -54,10 +52,13 @@ export const useSongs = (cardsInRow: number = 0, filterText = '') => {
   }, [queryResult])
 
   useEffect(() => {
+    if(onlyOnSearch && !filterText) {
+      return
+    }
     queryResult.remove()
     queryResult.refetch({ refetchPage: () => true })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterText])
+  }, [filterText, onlyOnSearch])
 
   return { ...queryResult, fetchNextPage }
 }

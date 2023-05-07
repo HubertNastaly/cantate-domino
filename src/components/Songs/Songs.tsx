@@ -6,6 +6,8 @@ import { COLUMN_GAP } from "@/constants"
 import { cardsNumberInRow } from "@/utils/cardsNumberInRow"
 import { LoaderRow } from "./LoaderRow"
 
+const ROWS_PER_CHUNK = 5
+
 interface Props {
   width: number
   filterText?: string
@@ -14,7 +16,8 @@ interface Props {
 
 export const Songs = ({ className, width, filterText }: Props) => {
   const cardsInRow = cardsNumberInRow(width)
-  const { data, fetchNextPage, isFetchingNextPage, isLoading } = useSongs(cardsInRow, filterText)
+  const songsPerPage = ROWS_PER_CHUNK * cardsInRow
+  const { data, fetchNextPage, isFetchingNextPage, isLoading } = useSongs(songsPerPage, filterText)
   useInfiniteScroll(fetchNextPage)
 
   const isBusy = isFetchingNextPage || isLoading
