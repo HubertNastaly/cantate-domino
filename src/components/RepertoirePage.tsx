@@ -1,7 +1,5 @@
 import { useRouter } from "next/router"
-import { Page, PageContent } from "@/components/common"
-import styled from "styled-components"
-import { RepertoireListItem } from "./RepertoireListItem"
+import { Page, PageContent, PageTitle, RepertoireList, RepertoireListItem } from "@/components/common"
 import { REPERTOIRE_CONFIG_REGEX } from "@/constants"
 import { parseRepertoireConfig } from "@/utils/parseRepertoireConfig"
 import { useRepertoire } from "@/hooks"
@@ -27,13 +25,14 @@ const Repertoire = ({ config }: Props) => {
   return (
     <Page>
       <PageContent>
-        <Title>Repertuar</Title>
+        <PageTitle>Repertuar</PageTitle>
         <RepertoireList>
           {parsedConfig.map(([label, songId], idx) => (
             <RepertoireListItem
               key={`${songId}-${idx}`}
               label={label}
               song={repertoire?.[label]}
+              onRemove={() => null}
             />
           ))}
         </RepertoireList>
@@ -41,16 +40,3 @@ const Repertoire = ({ config }: Props) => {
     </Page>
   )
 }
-
-const RepertoireList = styled.ul`
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  row-gap: 16px;
-`
-
-const Title = styled.h1`
-  margin-bottom: 32px;
-  font-size: 48px;
-`
