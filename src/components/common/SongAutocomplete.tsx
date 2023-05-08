@@ -1,6 +1,6 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { SearchBar } from "./SearchBar"
-import { useSongs } from "@/hooks"
+import { useOutsideClick, useSongs } from "@/hooks"
 import styled from "styled-components"
 import { SongCard, smallShadow } from "./SongCard"
 import { COLORS } from "@/utils/colors"
@@ -14,24 +14,30 @@ interface Props {
 
 export const Autocomplete = ({ onSelect }: Props) => {
   const [searchPhrase, setSearchPhrase] = useState('')
-  const { data } = useSongs(SUGGESTIONS_COUNT, searchPhrase, false)
+  const [isFocused, setIsFocused] = useState(false)
+
+  const suggestionsRef = useRef<HTMLUListElement>(null)
+  useOutsideClick(suggestionsRef, () => setIsFocused(false))
+
+  const { data } = useSongs(SUGGESTIONS_COUNT, searchPhrase, true)
   const suggestions = data?.pages[0].songs
 
   return (
     <Container>
-      <SearchBar value={searchPhrase} onChange={setSearchPhrase} />
-      {/* TODO: handle search phrase */}
-      <Suggestions>
-        {searchPhrase && suggestions?.map(song => (
-          <ListItem key={song.id} onClick={() => onSelect(song)}>
-            <SongCardStyled
-              song={song}
-              titlePlacement="right"
-              size="tiny"
-            />
-          </ListItem>
-        ))}
-      </Suggestions>
+      <SearchBar value={searchPhrase} onChange={setSearchPhrase} onFocus={() => setIsFocused(true)} />
+      {isFocused && (
+        <Suggestions ref={suggestionsRef}>
+          {suggestions?.map(song => (
+            <ListItem key={song.id} onClick={() => onSelect(song)}>
+              <SongCardStyled
+                song={song}
+                titlePlacement="right"
+                size="tiny"
+              />
+            </ListItem>
+          ))}
+        </Suggestions>
+      )}
     </Container>
   )
 }
@@ -55,7 +61,7 @@ const ListItem = styled.li`
   padding: 8px 16px;
   cursor: pointer;
 
-  transition: background-color 0.3s ease-out;
+  transition: background-color 0.2s ease-out;
 
   border-bottom: 1px solid ${COLORS.faded};
   &:last-child {

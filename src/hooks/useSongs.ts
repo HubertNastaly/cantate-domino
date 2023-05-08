@@ -2,16 +2,19 @@ import { EMPTY_FILTER_CHAR } from "@/constants"
 import { Song } from "@/types"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import axios from "axios"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 
 interface PageParam {
   nextPageToken: string | null
   songs: Song[]
 }
 
-const API_URL = `/api/songs/all`
+const API_URL = '/api/songs/all'
 
 export const useSongs = (songsPerPage: number = 0, filterText = '', onlyOnSearch = false) => {
+  // TODO: maybe it's better to pass
+  const queryKey = useMemo(() => Math.random().toFixed(5), [])
+
   const fetchNextSongsChunk = useCallback(async (pageParam: PageParam | undefined, filterText: string): Promise<PageParam> => {
     if(songsPerPage === 0) {
       return {
@@ -33,7 +36,7 @@ export const useSongs = (songsPerPage: number = 0, filterText = '', onlyOnSearch
   }, [songsPerPage])
 
   const queryResult = useInfiniteQuery<PageParam>({
-    queryKey: ['fetchSongs'],
+    queryKey: [`fetchSongs-${queryKey}`],
     queryFn: ({ pageParam }) => fetchNextSongsChunk(pageParam, filterText),
     getNextPageParam: (lastPage) => {
       if(!lastPage.nextPageToken) {

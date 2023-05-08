@@ -6,15 +6,17 @@ import styled from "styled-components"
 interface Props {
   value: string
   onChange: (value: string) => void
+  onFocus?: () => void
 }
 
-export const SearchBar = ({ value, onChange }: Props) => {
+export const SearchBar = ({ value, onChange, onFocus }: Props) => {
   return (
     <InputWrapper>
       <IoIosSearch color={COLORS.accent} size={16} />
       <Input
         placeholder="Szukaj pieśni"
         onChange={(event) => onChange(event.target.value)}
+        onFocus={onFocus}
         value={value}
       />
     </InputWrapper>
