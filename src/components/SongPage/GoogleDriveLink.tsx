@@ -1,5 +1,4 @@
 import { iconButtonStyles } from "@/components/common"
-import { COLORS } from "@/utils/colors"
 import Link from "next/link"
 import { FaGoogleDrive } from "react-icons/fa"
 import styled from "styled-components"
@@ -15,7 +14,7 @@ export const GoogleDriveLink = ({ songId }: Props) => {
 
   return (
     <IconLink href={link} size={48} target="_blank">
-      <FaGoogleDrive size={32} color={COLORS.primary} />
+      <FaGoogleDrive size={32} />
     </IconLink>
   )
 }

@@ -10,6 +10,7 @@ export const iconButtonStyles = css<{ size: number }>`
   box-sizing: border-box;
   border: none;
   border-radius: 50%;
+  color: ${COLORS.primary};
   background: ${COLORS.faded};
   cursor: pointer;
 `
