@@ -14,3 +14,8 @@ export const PageContent = styled.div`
     padding-top: 16px;
   }
 `
+
+export const PageTitle = styled.h1`
+  margin-bottom: 32px;
+  font-size: 48px;
+`

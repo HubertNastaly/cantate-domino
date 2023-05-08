@@ -1,3 +1,3 @@
-import { RepertoirePage } from '@/components/RepertoirePage'
+import { RepertoirePage } from '@/components'
 
 export default RepertoirePage
