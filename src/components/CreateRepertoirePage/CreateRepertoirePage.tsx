@@ -1,8 +1,9 @@
 import { Autocomplete, Page, PageContent, PageTitle, RepertoireItemLabel, RepertoireList, RepertoireListItem } from "@/components/common"
 import { REPERTOIRE_ITEMS, REPERTOIRE_ITEM_NAMES } from "@/constants"
 import { useCreateRepertoir } from "@/hooks"
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import styled from "styled-components"
+import { ShareRepertoire } from "./ShareRepertoire"
 
 export const CreateRepertoirePage = () => {
   const { repertoire, removeSong, addSong } = useCreateRepertoir()
@@ -29,6 +30,7 @@ export const CreateRepertoirePage = () => {
             </Fragment>
           ))}
         </RepertoireList>
+        <ShareRepertoire repertoire={repertoire} />
       </PageContent>
     </Page>
   )

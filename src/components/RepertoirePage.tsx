@@ -20,7 +20,7 @@ interface Props {
 
 const Repertoire = ({ config }: Props) => {
   const parsedConfig = parseRepertoireConfig(config)
-  const { data: repertoire, isLoading } = useRepertoire(config)
+  const { data: repertoire } = useRepertoire(config)
 
   return (
     <Page>
@@ -32,7 +32,6 @@ const Repertoire = ({ config }: Props) => {
               key={`${songId}-${idx}`}
               label={REPERTOIRE_ITEM_NAMES[repertoireItem]}
               song={repertoire?.[repertoireItem]}
-              onRemove={() => null}
             />
           ))}
         </RepertoireList>
