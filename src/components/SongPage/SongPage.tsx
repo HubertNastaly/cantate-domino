@@ -1,7 +1,9 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { FaGoogleDrive } from 'react-icons/fa'
 import styled from 'styled-components'
-import { SongCard, Page, PageContent } from "@/components/common";
+import Link from "next/link";
+import { SongCard, Page, PageContent, iconButtonStyles } from "@/components/common";
 import { BREAKPOINT } from "@/constants";
 import { useSong } from "@/hooks";
 import { Voice } from "@/types";
@@ -11,6 +13,7 @@ import { VoiceButtons } from "./VoiceButtons";
 import { Gallery } from "./Gallery";
 import { QrCode } from "./QrCode";
 import { AudioBar } from "./AudioBar";
+import { GoogleDriveLink } from "./GoogleDriveLink";
 
 export function SongPage () {
   const { query: { songId } } = useRouter()
@@ -46,7 +49,10 @@ const SongPageContent = ({ songId }: Props) => {
       <Header>
         <SongCardStyled song={data} size="small" titlePlacement="none" />
         <Title>{name}</Title>
-        <QrCodeStyled url={window.location.href} />
+        <Actions>
+          <QrCode url={window.location.href} />
+          <GoogleDriveLink songId={songId} />
+        </Actions>
       </Header>
       <VoiceButtons
         voiceFiles={voiceFiles}
@@ -86,9 +92,12 @@ const Title = styled.h1`
   margin-right: 16px;
 `
 
-const QrCodeStyled = styled(QrCode)`
+const Actions = styled.div`
   flex-shrink: 0;
   order: 3;
+
+  display: flex;
+  gap: 8px;
 
   @media screen and (max-width: ${BREAKPOINT.mobile}px) {
     align-self: flex-end;

@@ -1,7 +1,7 @@
 import { COLORS } from "@/utils/colors";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const IconButton = styled.button<{ size: number }>`
+export const iconButtonStyles = css<{ size: number }>`
   width: ${props => props.size}px;
   height: ${props => props.size}px;
   display: flex;
@@ -12,4 +12,8 @@ export const IconButton = styled.button<{ size: number }>`
   border-radius: 50%;
   background: ${COLORS.faded};
   cursor: pointer;
+`
+
+export const IconButton = styled.button<{ size: number }>`
+  ${iconButtonStyles}
 `
