@@ -59,6 +59,11 @@ const Row = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
 `
 
 const CreateRepertoireLink = styled(Link)`
@@ -70,4 +75,5 @@ const CreateRepertoireLink = styled(Link)`
   color: ${COLORS.background};
   border-radius: 4px;
   font-size: 18px;
+  text-align: center;
 `
