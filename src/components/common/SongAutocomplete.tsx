@@ -6,7 +6,7 @@ import { SongCard, smallShadow } from "./SongCard"
 import { COLORS } from "@/utils/colors"
 import { Song } from "@/types"
 
-const SUGGESTIONS_COUNT = 10
+const SUGGESTIONS_COUNT = 5
 
 interface Props {
   onSelect: (song: Song) => void

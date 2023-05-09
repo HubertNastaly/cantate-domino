@@ -2,21 +2,22 @@ import { BREAKPOINT } from "@/constants"
 import { lato } from "@/fonts"
 import { useCopyToClipboard } from "@/hooks"
 import { Repertoire } from "@/types"
-import { COLORS } from "@/utils/colors"
 import { generateRepertoireLink } from "@/utils/generateRepertoireLink"
 import { HiLink } from 'react-icons/hi'
 import styled from "styled-components"
+import { Button } from "@/components/common/Button"
 
 interface Props {
   repertoire: Repertoire
+  className?: string
 }
 
-export const ShareRepertoire = ({ repertoire }: Props) => {
+export const ShareRepertoire = ({ repertoire, className }: Props) => {
   const link = generateRepertoireLink(repertoire)
   const { copyToClipboard, isCopied } = useCopyToClipboard(link)
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <ShareLinkLabel>Udostępnij repertuar poprzez link</ShareLinkLabel>
       <CopyLinkButton onClick={copyToClipboard}>
         {isCopied ? 'Skopiowano' : (
@@ -31,7 +32,6 @@ export const ShareRepertoire = ({ repertoire }: Props) => {
 }
 
 const Wrapper = styled.div`
-  margin-top: 64px;
   display: flex;
   align-items: center;
   gap: 32px;
@@ -48,20 +48,9 @@ const ShareLinkLabel = styled.span`
   white-space: nowrap;
 `
 
-const CopyLinkButton = styled.button`
+const CopyLinkButton = styled(Button)`
   width: 100%;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 4px;
-  background-color: ${COLORS.accent};
-  color: ${COLORS.background};
-  font-family: ${lato.style.fontFamily};
-  font-size: 18px;
   font-weight: 900;
-  cursor: pointer;
 `
 
 const CopyIcon = styled(HiLink)`

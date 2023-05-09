@@ -1,12 +1,14 @@
 import { Autocomplete, Page, PageContent, PageTitle, RepertoireItemLabel, RepertoireList, RepertoireListItem } from "@/components/common"
-import { REPERTOIRE_ITEMS, REPERTOIRE_ITEM_NAMES } from "@/constants"
-import { useCreateRepertoir } from "@/hooks"
-import { Fragment, useEffect } from "react"
+import { BREAKPOINT, REPERTOIRE_ITEMS, REPERTOIRE_ITEM_NAMES } from "@/constants"
+import { Fragment } from "react"
 import styled from "styled-components"
 import { ShareRepertoire } from "./ShareRepertoire"
+import { useCreateRepertoire } from "@/providers"
+import { Button } from "../common/Button"
+import { COLORS } from "@/utils/colors"
 
 export const CreateRepertoirePage = () => {
-  const { repertoire, removeSong, addSong } = useCreateRepertoir()
+  const { repertoire, removeSong, addSong, clearRepertoire } = useCreateRepertoire()
 
   return (
     <Page>
@@ -30,10 +32,35 @@ export const CreateRepertoirePage = () => {
             </Fragment>
           ))}
         </RepertoireList>
-        <ShareRepertoire repertoire={repertoire} />
+        <Buttons>
+          <ShareRepertoireStyled repertoire={repertoire} />
+          <ClearButton onClick={clearRepertoire}>Wyczyść</ClearButton>
+        </Buttons>
       </PageContent>
     </Page>
   )
 }
 
 const ListItem = styled.li``
+
+const Buttons = styled.div`
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+`
+
+const ClearButton = styled(Button)`
+  background: ${COLORS.background};
+  color: ${COLORS.accent};
+  border: 1px solid ${COLORS.accent};
+`
+
+const ShareRepertoireStyled = styled(ShareRepertoire)`
+  width: 100%;
+`
