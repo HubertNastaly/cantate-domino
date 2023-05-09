@@ -8,7 +8,9 @@ export const Page = styled.main`
 export const PageContent = styled.div`
   margin: 0 auto;
   padding: 64px 16px;
+  width: 100%;
   max-width: ${PAGE_CONTENT_WIDTH}px;
+  box-sizing: border-box;
 
   @media screen and (max-width: ${BREAKPOINT.mobile}px) {
     padding-top: 16px;

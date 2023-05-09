@@ -1,15 +1,33 @@
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 export function useElementWidth<T extends HTMLElement>() {
   const [elementWidth, setElementWidth] = useState<number>()
-  const elementRef = useRef<T>(null)
+  const elementRef = useRef<T|null>(null)
+
+  const updateWidth = useCallback(() => {
+    if(elementRef.current) {
+      setElementWidth(getInnerWidth(elementRef.current))
+    }
+  }, [])
 
   useEffect(() => {
-    if(elementRef.current) {
-      setElementWidth(elementRef.current.getBoundingClientRect().width)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [elementRef.current])
+    return () => window.removeEventListener('resize', updateWidth)
+  }, [updateWidth])
 
-  return [elementRef, elementWidth] as const
+  const setRef = useCallback((node: T) => {
+    if(node) {
+      setElementWidth(getInnerWidth(node))
+      window.addEventListener('resize', updateWidth)
+    }
+
+    elementRef.current = node
+  }, [updateWidth])
+
+  return [setRef, elementWidth] as const
+}
+
+function getInnerWidth(node: Element) {
+  const { width } = node.getBoundingClientRect()
+  const { paddingLeft, paddingRight } = window.getComputedStyle(node)
+  return width - parseInt(paddingLeft) - parseInt(paddingRight)
 }
