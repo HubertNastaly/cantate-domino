@@ -37,8 +37,6 @@ const SongPageContent = ({ songId }: Props) => {
   const [selectedVoice, setSelectedVoice] = useState<Voice>()
   const [pageContentRef, width] = useElementWidth<HTMLDivElement>()
 
-  console.log({ width, pageContentRef })
-
   if(isLoading || !data) {
     return <SongPageLoader songId={songId} />
   }

@@ -62,17 +62,6 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
   const pdfs = await Promise.all(pdfsPromises)
   const pdfUris = pdfs.map(({ data }) => getBase64Uri(data as ArrayBuffer))
 
-  // console.log({ pdfUris })
-
-  // // const results = await Promise.all(
-  // //   pdfFiles.map(fileId => (
-  // //     drive.files.export({
-  // //       fileId,
-  // //       mimeType: 'application/pdf'
-  // //     })
-  // //   )
-  // // ))
-
   res.status(200).send({
     id: songId,
     name,
