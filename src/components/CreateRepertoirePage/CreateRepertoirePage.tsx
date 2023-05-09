@@ -49,7 +49,7 @@ const Buttons = styled.div`
   align-items: center;
   gap: 16px;
 
-  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+  @media screen and (max-width: ${BREAKPOINT.tablet}px) {
     flex-direction: column;
     align-items: stretch;
   }

@@ -5,11 +5,13 @@ import { toSvg } from 'jdenticon'
 import { COLORS } from "@/utils/colors"
 import { CARD_SIZE } from "@/constants"
 
+type TitlePlacement = 'bottom' | 'right' | 'none'
+
 interface Props {
   song: Song
   size: keyof typeof CARD_SIZE
   clickable?: boolean
-  titlePlacement?: 'bottom' | 'right' | 'none'
+  titlePlacement?: TitlePlacement
   className?: string
 }
 
@@ -20,12 +22,12 @@ export const SongCard = ({ song: { id, name }, size, clickable, titlePlacement =
   const content = () => (
     <Content column={titlePlacement === 'bottom'}>
       <Cover size={cardSize} dangerouslySetInnerHTML={{ __html: toSvg(id, iconSize) }} />
-      {titlePlacement !== 'none' && <Title>{name}</Title>}
+      {titlePlacement !== 'none' && <Title titlePlacement={titlePlacement}>{name}</Title>}
     </Content>
   )
 
   return (
-    <Container size={cardSize} className={className} clickable={clickable}>
+    <Container className={className} clickable={clickable} size={cardSize} titlePlacement={titlePlacement}>
       {clickable ? (
         <SongLink href={`/songs/${id}`}>
           {content()}
@@ -72,15 +74,19 @@ export const Cover = styled.div<{ size: number }>`
   }
 `
 
-const Title = styled.span`
+const Title = styled.span<{ titlePlacement: Exclude<TitlePlacement, 'none'> }>`
   text-align: center;
   font-size: 18px;
   font-weight: bold;
   color: ${COLORS.primary};
+
+  white-space: ${props => props.titlePlacement === 'right' ? 'nowrap' : 'wrap'};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `
 
-const Container = styled.div<{ size: number, clickable?: boolean }>`
-  width: ${props => props.size}px;
+const Container = styled.div<{ clickable?: boolean, titlePlacement: TitlePlacement, size: number }>`
+  width: ${props => props.titlePlacement === 'right' ? '100%' : `${props.size}px`};
   cursor: ${props => props.clickable ? 'pointer' : 'unset'};
 
   & ${Cover} {
