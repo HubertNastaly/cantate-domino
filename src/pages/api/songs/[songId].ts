@@ -15,7 +15,7 @@ interface SongResponse {
   id: string
   name: string
   voiceFiles: VoiceFiles
-  pdfFiles: string[]
+  pdfUris: string[]
   imageFiles: string[]
 }
 
@@ -50,12 +50,35 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
   const pdfFiles = getFilesWithExtension(files, ['.pdf'])
   const imageFiles = getFilesWithExtension(files, ['.png', '.jpg'])
 
+  const pdfsPromises = pdfFiles.map(({ id }) => (
+    drive.files.get({
+      fileId: id ?? undefined,
+      alt: 'media'
+    }, {
+      responseType: 'arraybuffer'
+    })
+  ))
+
+  const pdfs = await Promise.all(pdfsPromises)
+  const pdfUris = pdfs.map(({ data }) => getBase64Uri(data as ArrayBuffer))
+
+  // console.log({ pdfUris })
+
+  // // const results = await Promise.all(
+  // //   pdfFiles.map(fileId => (
+  // //     drive.files.export({
+  // //       fileId,
+  // //       mimeType: 'application/pdf'
+  // //     })
+  // //   )
+  // // ))
+
   res.status(200).send({
     id: songId,
     name,
     voiceFiles,
-    pdfFiles,
-    imageFiles
+    pdfUris,
+    imageFiles: imageFiles.map(({ id }) => id) as string[]
   })
 }
 
@@ -65,8 +88,7 @@ function getVoiceFileId(voice: Voice, files: GoogleFiles) {
 
 function getFilesWithExtension(files: GoogleFiles, extensions: string[]) {
   const filesWithRequiredExtension = files?.filter(({ name }) => extensions.some(extension => name?.endsWith(extension))) ?? []
-  const sortedFiles = filesWithRequiredExtension.sort(compareFilesByName)
-  return sortedFiles.filter(({ id }) => !!id).map(({ id }) => id) as string[]
+  return filesWithRequiredExtension.sort(compareFilesByName)
 }
 
 function compareFilesByName(fileA: drive_v3.Schema$File, fileB: drive_v3.Schema$File) {
@@ -80,4 +102,9 @@ function compareFilesByName(fileA: drive_v3.Schema$File, fileB: drive_v3.Schema$
   }
 
   return 0
+}
+
+function getBase64Uri(data: ArrayBuffer) {
+  const base64 = Buffer.from(data).toString('base64')
+  return `data:application/pdf;base64,${base64}`
 }

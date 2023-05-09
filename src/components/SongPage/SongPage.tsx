@@ -1,11 +1,9 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { FaGoogleDrive } from 'react-icons/fa'
 import styled from 'styled-components'
-import Link from "next/link";
-import { SongCard, Page, PageContent, iconButtonStyles } from "@/components/common";
+import { SongCard, Page, PageContent } from "@/components/common";
 import { BREAKPOINT } from "@/constants";
-import { useSong } from "@/hooks";
+import { useElementWidth, useSong } from "@/hooks";
 import { Voice } from "@/types";
 import { googleFileUrl } from "@/utils/googleFileUrl";
 import { SongPageLoader } from "./SongPageLoader";
@@ -14,6 +12,7 @@ import { Gallery } from "./Gallery";
 import { QrCode } from "./QrCode";
 import { AudioBar } from "./AudioBar";
 import { GoogleDriveLink } from "./GoogleDriveLink";
+import { PdfViewer } from "./PdfViewer";
 
 export function SongPage () {
   const { query: { songId } } = useRouter()
@@ -36,16 +35,19 @@ interface Props {
 const SongPageContent = ({ songId }: Props) => {
   const { data, isLoading } = useSong(songId)
   const [selectedVoice, setSelectedVoice] = useState<Voice>()
+  const [pageContentRef, width] = useElementWidth<HTMLDivElement>()
+
+  console.log({ width, pageContentRef })
 
   if(isLoading || !data) {
     return <SongPageLoader songId={songId} />
   }
   
-  const { voiceFiles, name, imageFiles, pdfFiles } = data
+  const { voiceFiles, name, imageFiles, pdfUris } = data
   const selectedVoiceFile = selectedVoice && googleFileUrl(voiceFiles[selectedVoice])
 
   return (
-    <PageContentStyled>
+    <PageContentStyled ref={pageContentRef}>
       <Header>
         <SongCardStyled song={data} size="small" titlePlacement="none" />
         <Title>{name}</Title>
@@ -59,6 +61,7 @@ const SongPageContent = ({ songId }: Props) => {
         selectedVoice={selectedVoice}
         onVoiceChange={setSelectedVoice}
       />
+      <PdfViewer pdfUrls={pdfUris} width={width} />
       <Gallery imageFiles={imageFiles} songName={name} />
       <AudioBarStyled fileUrl={selectedVoiceFile} />
     </PageContentStyled>

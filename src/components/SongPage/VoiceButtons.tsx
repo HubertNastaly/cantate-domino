@@ -58,7 +58,7 @@ const VoiceButton = styled.button<{ selected?: boolean }>`
   gap: 16px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${({ selected, disabled }) => disabled ? COLORS.disabled : selected ? COLORS.accent : COLORS.faded};
+  border-color: ${({ selected }) => selected ? COLORS.accent : COLORS.faded};
   border-radius: 4px;
   cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
   font-size: 24px;
