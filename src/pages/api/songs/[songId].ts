@@ -23,7 +23,22 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
   const { songId } = req.query
 
   const drive = getDriveInstance()
+  const { name, files } = await fetchSong(drive, songId)
 
+  if(!name) {
+    return res.status(404)
+  }
+
+  res.status(200).send({
+    id: songId,
+    name,
+    voiceFiles: getVoiceFiles(files),
+    pdfUris: await getPdfUris(drive, files),
+    imageFiles: getImageFiles(files)
+  })
+}
+
+async function fetchSong(drive: drive_v3.Drive, songId: string) {
   const songPromise = drive.files.get({
     fileId: songId
   })
@@ -40,15 +55,20 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
   const { name } = songResult.data
   const { files } = songFilesResult.data
 
-  if(!name) {
-    return res.status(404)
-  }
+  return { name, files }
+}
 
+function getVoiceFiles(files: GoogleFiles) {
   const voiceEntries = VOICES.map((voice): [Voice, string | undefined] => [voice, getVoiceFileId(voice, files)])
-  const voiceFiles = Object.fromEntries(voiceEntries) as VoiceFiles
-  
+  return Object.fromEntries(voiceEntries) as VoiceFiles
+}
+
+function getImageFiles(files: GoogleFiles) {
+  return getFilesWithExtension(files, ['.png', '.jpg']).map(({ id }) => id) as string[]
+}
+
+async function getPdfUris(drive: drive_v3.Drive, files: GoogleFiles) {
   const pdfFiles = getFilesWithExtension(files, ['.pdf'])
-  const imageFiles = getFilesWithExtension(files, ['.png', '.jpg'])
 
   const pdfsPromises = pdfFiles.map(({ id }) => (
     drive.files.get({
@@ -62,13 +82,7 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
   const pdfs = await Promise.all(pdfsPromises)
   const pdfUris = pdfs.map(({ data }) => getBase64Uri(data as ArrayBuffer))
 
-  res.status(200).send({
-    id: songId,
-    name,
-    voiceFiles,
-    pdfUris,
-    imageFiles: imageFiles.map(({ id }) => id) as string[]
-  })
+  return pdfUris
 }
 
 function getVoiceFileId(voice: Voice, files: GoogleFiles) {

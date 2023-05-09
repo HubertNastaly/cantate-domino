@@ -12,7 +12,7 @@ export function useElementWidth<T extends HTMLElement>() {
 
   useEffect(() => {
     return () => window.removeEventListener('resize', updateWidth)
-  }, [])
+  }, [updateWidth])
 
   const setRef = useCallback((node: T) => {
     if(node) {
@@ -21,7 +21,7 @@ export function useElementWidth<T extends HTMLElement>() {
     }
 
     elementRef.current = node
-  }, [])
+  }, [updateWidth])
 
   return [setRef, elementWidth] as const
 }
