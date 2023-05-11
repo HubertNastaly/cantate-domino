@@ -47,12 +47,12 @@ export const useSongs = (songsPerPage: number = 0, filterText = '', onlyOnSearch
     enabled: !onlyOnSearch || !!filterText
   })
 
-  const fetchNextPage = useCallback(() => {
+  const fetchNextPage = () => {
     const { hasNextPage, fetchNextPage } = queryResult
     if(hasNextPage) {
       fetchNextPage()
     }
-  }, [queryResult])
+  }
 
   useEffect(() => {
     if(onlyOnSearch && !filterText) {
@@ -61,7 +61,7 @@ export const useSongs = (songsPerPage: number = 0, filterText = '', onlyOnSearch
     queryResult.remove()
     queryResult.refetch({ refetchPage: () => true })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterText, onlyOnSearch])
+  }, [filterText, onlyOnSearch, songsPerPage])
 
   return { ...queryResult, fetchNextPage }
 }

@@ -1,10 +1,11 @@
-import { useInfiniteScroll, useSongs } from "@/hooks"
-import { Fragment } from "react"
+import { useInfiniteScroll } from "@/hooks"
+import { Fragment, useEffect } from "react"
 import { SongCard } from "@/components/common"
 import styled from "styled-components"
 import { COLUMN_GAP } from "@/constants"
 import { cardsNumberInRow } from "@/utils/cardsNumberInRow"
 import { LoaderRow } from "./LoaderRow"
+import { useSongsContext } from "@/providers"
 
 const ROWS_PER_CHUNK = 5
 
@@ -14,11 +15,14 @@ interface Props {
   className?: string
 }
 
-export const Songs = ({ className, width, filterText }: Props) => {
+export const Songs = ({ className, width }: Props) => {
   const cardsInRow = cardsNumberInRow(width)
-  const songsPerPage = ROWS_PER_CHUNK * cardsInRow
-  const { data, fetchNextPage, isFetchingNextPage, isLoading } = useSongs(songsPerPage, filterText)
+  const { data, fetchNextPage, isFetchingNextPage, isLoading, setSongsPerPage } = useSongsContext()
   useInfiniteScroll(fetchNextPage)
+
+  useEffect(() => {
+    setSongsPerPage(ROWS_PER_CHUNK * cardsInRow)
+  }, [cardsInRow, setSongsPerPage])
 
   const isBusy = isFetchingNextPage || isLoading
 

@@ -2,15 +2,15 @@ import { Songs } from '@/components'
 import { Page, PageContent, SearchBar } from '@/components/common'
 import { BREAKPOINT } from '@/constants'
 import { useElementWidth } from '@/hooks'
+import { useSongsContext } from '@/providers'
 import { COLORS } from '@/utils/colors'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState } from 'react'
 import styled from 'styled-components'
 
 export default function Home() {
   const [contentRef, contentWidth] = useElementWidth<HTMLDivElement>()
-  const [searchPhrase, setSearch] = useState<string>('')
+  const { searchPhrase, setSearchPhrase } = useSongsContext()
 
   return (
     <>
@@ -27,7 +27,7 @@ export default function Home() {
           <Row>
             <SearchBar
               value={searchPhrase}
-              onChange={setSearch}
+              onChange={setSearchPhrase}
             />
             <CreateRepertoireLink href="/repertoire/create">Stwórz repertuar</CreateRepertoireLink>
           </Row>
