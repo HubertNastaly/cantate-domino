@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app'
 import './defaultStyles.css'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { lato } from '@/fonts'
-import { CreateRepertoireProvider } from '@/providers'
+import { CreateRepertoireProvider, SongsProvider } from '@/providers'
 
 export default function App({ Component, pageProps }: AppProps) {
   const client = new QueryClient()
@@ -14,9 +14,11 @@ export default function App({ Component, pageProps }: AppProps) {
           font-family: ${lato.style.fontFamily};
         }
       `}</style>
-      <CreateRepertoireProvider>
-        <Component {...pageProps} />
-      </CreateRepertoireProvider>
+      <SongsProvider>
+        <CreateRepertoireProvider>
+          <Component {...pageProps} />
+        </CreateRepertoireProvider>
+      </SongsProvider>
     </QueryClientProvider>
   )
 }

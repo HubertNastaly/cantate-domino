@@ -21,13 +21,14 @@ export const Autocomplete = ({ onSelect }: Props) => {
 
   const { data } = useSongs(SUGGESTIONS_COUNT, searchPhrase, true)
   const suggestions = data?.pages[0].songs
+  const shouldShowSuggestions = searchPhrase.length > 0
 
   return (
     <Container>
       <SearchBar value={searchPhrase} onChange={setSearchPhrase} onFocus={() => setIsFocused(true)} />
       {isFocused && (
         <Suggestions ref={suggestionsRef}>
-          {suggestions?.map(song => (
+          {shouldShowSuggestions && suggestions?.map(song => (
             <ListItem key={song.id} onClick={() => onSelect(song)}>
               <SongCardStyled
                 song={song}
