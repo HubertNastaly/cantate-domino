@@ -1,27 +1,22 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 export function useElementWidth<T extends HTMLElement>() {
   const [elementWidth, setElementWidth] = useState<number>()
-  const elementRef = useRef<T|null>(null)
-
-  const updateWidth = useCallback(() => {
-    if(elementRef.current) {
-      setElementWidth(getInnerWidth(elementRef.current))
-    }
-  }, [])
+  const [observer, setObserver] = useState<ResizeObserver>()
 
   useEffect(() => {
-    return () => window.removeEventListener('resize', updateWidth)
-  }, [updateWidth])
+    const newObserver = new ResizeObserver(([element]) => {
+      setElementWidth(getInnerWidth(element.target))
+    })
+    setObserver(newObserver)
+    return () => newObserver.disconnect()
+  }, [])
 
   const setRef = useCallback((node: T) => {
-    if(node) {
-      setElementWidth(getInnerWidth(node))
-      window.addEventListener('resize', updateWidth)
+    if(node && observer) {
+      observer.observe(node)
     }
-
-    elementRef.current = node
-  }, [updateWidth])
+  }, [observer])
 
   return [setRef, elementWidth] as const
 }
