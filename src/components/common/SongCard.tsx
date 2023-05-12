@@ -4,12 +4,13 @@ import styled, { css } from "styled-components"
 import { toSvg } from 'jdenticon'
 import { COLORS } from "@/utils/colors"
 import { CARD_SIZE } from "@/constants"
+import { CardSize } from "@/types"
 
 type TitlePlacement = 'bottom' | 'right' | 'none'
 
 interface Props {
   song: Song
-  size: keyof typeof CARD_SIZE
+  size: CardSize
   clickable?: boolean
   titlePlacement?: TitlePlacement
   className?: string

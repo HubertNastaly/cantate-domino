@@ -1,16 +1,18 @@
 import { CARD_SIZE } from "@/constants"
 import { Cover, bigShadow, smallShadow } from "@/components/common"
 import styled, { keyframes } from 'styled-components'
+import { CardSize } from "@/types"
 
 interface Props {
+  cardSize: CardSize
   cardsInRow: number
 }
 
-export const LoaderRow = ({ cardsInRow }: Props) => {
+export const LoaderRow = ({ cardsInRow, cardSize }: Props) => {
   return (
     <>
       {[...new Array(cardsInRow)].map((_, idx) => (
-        <AnimatedCover key={idx} size={CARD_SIZE.big} animationDelay={idx / 10} />
+        <AnimatedCover key={idx} size={CARD_SIZE[cardSize]} animationDelay={idx / 10} />
       ))}
     </>
   )
