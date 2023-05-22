@@ -16,7 +16,8 @@ interface Props {
   className?: string
 }
 
-export const SongCard = ({ song: { id, name }, size, clickable, titlePlacement = 'bottom', className }: Props) => {
+export const SongCard = ({ song, size, clickable, titlePlacement = 'bottom', className }: Props) => {
+  const { id, name } = song
   const cardSize = CARD_SIZE[size]
   const iconSize = 0.9 * cardSize
 
@@ -30,12 +31,17 @@ export const SongCard = ({ song: { id, name }, size, clickable, titlePlacement =
   return (
     <Container className={className} clickable={clickable} size={cardSize} titlePlacement={titlePlacement}>
       {clickable ? (
-        <SongLink href={`/songs/${id}`}>
+        <SongLink href={getSongLink(song)}>
           {content()}
         </SongLink>
       ) : content()}
     </Container>
   )
+}
+
+function getSongLink({ id, name }: Song) {
+  const isMass = name.toLowerCase().includes('missa')
+  return isMass ? `/songs/mass/${id}` : `/songs/${id}`
 }
 
 const Content = styled.div<{ column?: boolean }>`

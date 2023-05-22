@@ -1,17 +1,14 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import styled from 'styled-components'
-import { SongCard, Page, PageContent } from "@/components/common";
-import { BREAKPOINT } from "@/constants";
+import { Page, PageContent, SongPageHeader } from "@/components/common";
 import { useElementWidth, useSong } from "@/hooks";
 import { Voice } from "@/types";
 import { googleFileUrl } from "@/utils/googleFileUrl";
 import { SongPageLoader } from "./SongPageLoader";
 import { VoiceButtons } from "./VoiceButtons";
 import { Gallery } from "./Gallery";
-import { QrCode } from "./QrCode";
 import { AudioBar } from "./AudioBar";
-import { GoogleDriveLink } from "./GoogleDriveLink";
 import { PdfViewer } from "./PdfViewer";
 
 export function SongPage () {
@@ -46,14 +43,7 @@ const SongPageContent = ({ songId }: Props) => {
 
   return (
     <PageContentStyled ref={pageContentRef}>
-      <Header>
-        <SongCardStyled song={data} size="small" titlePlacement="none" />
-        <Title>{name}</Title>
-        <Actions>
-          <QrCode url={window.location.href} />
-          <GoogleDriveLink songId={songId} />
-        </Actions>
-      </Header>
+      <SongPageHeader song={data} />
       <VoiceButtons
         voiceFiles={voiceFiles}
         selectedVoice={selectedVoice}
@@ -71,39 +61,6 @@ const PageContentStyled = styled(PageContent)`
   flex-direction: column;
   row-gap: 32px;
   padding-bottom: 192px;
-`
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-
-  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
-    flex-direction: column;
-    text-align: center;
-  }
-`
-
-const SongCardStyled = styled(SongCard)`
-  order: 0;
-`
-
-const Title = styled.h1`
-  order: 1;
-  margin-left: 32px;
-  margin-right: 16px;
-`
-
-const Actions = styled.div`
-  flex-shrink: 0;
-  order: 3;
-
-  display: flex;
-  gap: 8px;
-
-  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
-    align-self: flex-end;
-    order: -1;
-  }
 `
 
 const AudioBarStyled = styled(AudioBar)`

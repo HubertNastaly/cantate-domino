@@ -1,5 +1,5 @@
 import { VOICES, Voice, VoiceFiles } from "@/types";
-import { getDriveInstance } from "@/utils/googleApi";
+import { fetchSong, getDriveInstance } from "@/utils/googleApi";
 import { drive_v3 } from "googleapis";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -36,26 +36,6 @@ export default async function handler(req: SongRequest, res: NextApiResponse<Son
     pdfUris: await getPdfUris(drive, files),
     imageFiles: getImageFiles(files)
   })
-}
-
-async function fetchSong(drive: drive_v3.Drive, songId: string) {
-  const songPromise = drive.files.get({
-    fileId: songId
-  })
-
-  const songFilesPromise = drive.files.list({
-    supportsAllDrives: true,
-    includeItemsFromAllDrives: true,
-    fields: 'files(id, name)',
-    q: `"${songId}" in parents`,
-  })
-
-  const [songResult, songFilesResult] = await Promise.all([songPromise, songFilesPromise])
-
-  const { name } = songResult.data
-  const { files } = songFilesResult.data
-
-  return { name, files }
 }
 
 function getVoiceFiles(files: GoogleFiles) {

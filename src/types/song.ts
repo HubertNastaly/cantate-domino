@@ -10,3 +10,13 @@ export interface SongDetailed extends Song {
   pdfUris: string[]
   imageFiles: string[]
 }
+
+export interface MassFiles {
+  kyrieId: string
+  sanctusId: string
+  agnusId: string
+}
+
+export interface Mass extends Song {
+  massFiles: MassFiles
+}
