@@ -1,57 +1,90 @@
-import { BREAKPOINT } from "@/constants"
-import { Song } from "@/types"
 import styled from "styled-components"
+import { Song } from "@/types"
+import { useDevice } from "@/hooks"
 import { SongCard } from "./SongCard"
-import { ReactNode } from "react"
 import { QrCode } from "./QrCode"
 import { GoogleDriveLink } from "./GoogleDriveLink"
+import { BackButton } from "./BackButton"
 
 interface Props {
   song: Song
 }
 
 export const SongPageHeader = ({ song }: Props) => {
+  const device = useDevice()
+
+  return device === 'desktop' ? (
+    <DesktopSongPageHeader song={song} />
+  ) : (
+    <MobileSongPageHeader song={song} />
+  )
+}
+
+const DesktopSongPageHeader = ({ song }: Props) => {
   return (
     <Header>
+      <BackButton />
       <SongCardStyled song={song} size="small" titlePlacement="none" />
       <Title>{song.name}</Title>
-      <Actions>
+      <DesktopActions>
         <QrCode url={window.location.href} />
         <GoogleDriveLink songId={song.id} />
-      </Actions>
+      </DesktopActions>
     </Header>
+  )
+}
+
+const MobileSongPageHeader = ({ song }: Props) => {
+  return (
+    <MobileHeader>
+      <TopRow>
+        <BackButton />
+        <MobileActions>
+          <QrCode url={window.location.href} />
+          <GoogleDriveLink songId={song.id} />
+        </MobileActions>
+      </TopRow>
+      <SongCard song={song} size="small" titlePlacement="none" />
+      <Title>{song.name}</Title>
+    </MobileHeader>
   )
 }
 
 const Header = styled.div`
   display: flex;
   align-items: center;
+  gap: 16px;
+`
 
-  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
-    flex-direction: column;
-    text-align: center;
-  }
+const MobileHeader = styled(Header)`
+  flex-direction: column;
+  text-align: center;
 `
 
 const SongCardStyled = styled(SongCard)`
-  order: 0;
+  margin-left: 32px;
 `
 
 const Title = styled.h1`
-  order: 1;
-  margin-left: 32px;
-  margin-right: 16px;
+  margin: 0 16px;
+`
+
+const TopRow = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 `
 
 const Actions = styled.div`
   flex-shrink: 0;
-  order: 3;
-
   display: flex;
   gap: 8px;
+`
 
-  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
-    align-self: flex-end;
-    order: -1;
-  }
+const DesktopActions = styled(Actions)`
+  margin-left: auto;
+`
+
+const MobileActions = styled(Actions)`
+  align-self: flex-end;
 `

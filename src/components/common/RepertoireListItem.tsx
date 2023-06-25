@@ -1,9 +1,9 @@
-import { RepertoireItem, Song } from '@/types'
 import styled from 'styled-components'
-import { CARD_SIZE } from '@/constants'
 import { MdDelete } from 'react-icons/md'
+import { Song } from '@/types'
+import { CARD_SIZE } from '@/constants'
 import { Cover, SongCard } from './SongCard'
-import { IconButton } from './IconButton'
+import { RoundedIconButton } from './IconButton'
 
 interface Props {
   label: string
@@ -27,9 +27,9 @@ export const RepertoireListItem = ({ label, song, onRemove }: Props) => {
           />
         )}
         {onRemove && (
-          <IconButton size={36} onClick={onRemove}>
+          <RoundedIconButton size={36} onClick={onRemove}>
             <MdDelete size={24} />
-          </IconButton>
+          </RoundedIconButton>
         )}
       </Row>
     </ListItem>
