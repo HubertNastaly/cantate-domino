@@ -30,6 +30,7 @@ export default async function handler(req: SongsRequest, res: NextApiResponse<So
     pageSize: Number(pageSize),
     pageToken,
     fields: 'nextPageToken, files(id, name)',
+    orderBy: 'name',
     q: getQuery(filterText),
   })
 

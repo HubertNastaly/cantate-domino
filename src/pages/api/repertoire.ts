@@ -13,7 +13,9 @@ interface RepertoireResponse {
 export default async function handler(req: RepertoireRequest, res: NextApiResponse<RepertoireResponse>) {
   const configEntries = Object.entries(req.query) as [RepertoireItem, string][]
   const drive = getDriveInstance()
-  const songResponses = await Promise.all(configEntries.map(async ([repertoirItem, songId]) => [repertoirItem, songId ? await drive.files.get({ fileId: songId }) : undefined] as const))
+  const songResponses = await Promise.all(configEntries.map(async ([repertoirItem, songId]) =>
+    [repertoirItem, songId ? await drive.files.get({ fileId: songId }) : undefined] as const
+  ))
 
   const success = songResponses.every(([_, response]) => response ? response.status === 200 : true)
   if(success) {
@@ -22,7 +24,7 @@ export default async function handler(req: RepertoireRequest, res: NextApiRespon
       return [repertoirItem, parsedSongResponse]
     })
 
-    res.status(200).send(Object.fromEntries(parsedResponse))
+    return res.status(200).send(Object.fromEntries(parsedResponse))
   }
 
   res.status(500)
