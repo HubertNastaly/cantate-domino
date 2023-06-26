@@ -1,4 +1,13 @@
-import { Autocomplete, Page, PageContent, PageTitle, RepertoireItemLabel, RepertoireList, RepertoireListItem } from "@/components/common"
+import {
+  Autocomplete,
+  BackButton,
+  Page,
+  PageContent,
+  PageTitle,
+  RepertoireItemLabel,
+  RepertoireList,
+  RepertoireListItem
+} from "@/components/common"
 import { BREAKPOINT, REPERTOIRE_ITEMS, REPERTOIRE_ITEM_NAMES } from "@/constants"
 import { Fragment } from "react"
 import styled from "styled-components"
@@ -13,7 +22,10 @@ export const CreateRepertoirePage = () => {
   return (
     <Page>
       <PageContent>
-        <PageTitle>Stwórz repertuar</PageTitle>
+        <Header>
+          <BackButton />
+          <PageTitle>Stwórz repertuar</PageTitle>
+        </Header>
         <RepertoireList>
           {REPERTOIRE_ITEMS.map((item) => (
             <Fragment key={`repertoire-item-${item}`}>
@@ -40,6 +52,21 @@ export const CreateRepertoirePage = () => {
     </Page>
   )
 }
+
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 32px;
+
+  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+    flex-direction: column;
+    gap: 0;
+
+    & button {
+      align-self: flex-start;
+    }
+  }
+`
 
 const ListItem = styled.li``
 

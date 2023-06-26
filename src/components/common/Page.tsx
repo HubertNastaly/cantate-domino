@@ -12,7 +12,7 @@ export const PageContent = styled.div`
   max-width: ${PAGE_CONTENT_WIDTH}px;
   box-sizing: border-box;
 
-  @media screen and (max-width: ${BREAKPOINT.mobile}px) {
+  @media screen and (max-width: ${BREAKPOINT.tablet}px) {
     padding-top: 16px;
   }
 `
