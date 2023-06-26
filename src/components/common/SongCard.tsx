@@ -66,6 +66,9 @@ export const smallShadow = css`
 export const Cover = styled.div<{ size: number }>`
   width: ${props => props.size}px;
   height: ${props => props.size}px;
+  min-width: ${props => props.size}px;
+  min-height: ${props => props.size}px;
+
   display: flex;
   justify-content: center;
   align-items: center;
