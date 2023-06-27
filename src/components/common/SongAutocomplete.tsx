@@ -2,6 +2,7 @@ import { KeyboardEvent, useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { SearchBar } from './SearchBar'
 import { SongCard, smallShadow } from './SongCard'
+import { Spinner } from './Spinner'
 import { useOutsideClick, useSongs } from '@/hooks'
 import { COLORS } from '@/utils/colors'
 import { Song } from '@/types'
@@ -53,23 +54,73 @@ export const Autocomplete = ({ onSelect }: Props) => {
       <SearchBar value={searchPhrase} onChange={setSearchPhrase} onFocus={() => setIsFocused(true)} />
       {isFocused && (
         <Suggestions ref={suggestionsRef}>
-          {shouldShowSuggestions && suggestions?.map((song, index) => (
-            <ListItem key={song.id} onClick={() => onSelect(song)} focused={index === focusedListItemIndex}>
-              <SongCardStyled
-                song={song}
-                titlePlacement="right"
-                size="tiny"
-              />
-            </ListItem>
-          ))}
+          {shouldShowSuggestions && (
+            <SuggestionsList
+              suggestions={suggestions}
+              onSelect={onSelect}
+              focusedListItemIndex={focusedListItemIndex}
+            />
+          )}
         </Suggestions>
       )}
     </Container>
   )
 }
 
+interface SuggestionsListProps {
+  suggestions: Song[] | undefined
+  onSelect: (song: Song) => void
+  focusedListItemIndex: number | undefined
+}
+
+const SuggestionsList = ({ suggestions, onSelect, focusedListItemIndex }: SuggestionsListProps) => {
+  if(!suggestions) {
+    return (
+      <ListItem>
+        <CenteredSpinner size={32} />
+      </ListItem>
+    )
+  }
+
+  if(suggestions.length === 0) {
+    return (
+      <ListItem>
+        <NoResultsText>Brak wyników</NoResultsText>
+      </ListItem>
+    )
+  }
+
+  return (
+    <>
+      {suggestions.map((song, index) => (
+        <ListItem
+          key={song.id}
+          onClick={() => onSelect(song)}
+          focused={index === focusedListItemIndex}
+        >
+          <SongCardStyled
+            song={song}
+            titlePlacement="right"
+            size="tiny"
+          />
+        </ListItem>
+      ))}
+    </>
+  )
+}
+
 const Container = styled.div`
   position: relative;
+`
+
+const NoResultsText = styled.span`
+  font-size: 18px;
+  color: ${COLORS.primary};
+`
+
+const CenteredSpinner = styled(Spinner)`
+  display: block;
+  margin: 0 auto;
 `
 
 const Suggestions = styled.ul`
@@ -85,7 +136,6 @@ const Suggestions = styled.ul`
 
 const ListItem = styled.li<{ focused?: boolean }>`
   padding: 8px 16px;
-  cursor: pointer;
   background: ${props => props.focused ? COLORS.faded : COLORS.background};
 
   transition: background-color 0.2s ease-out;
@@ -96,7 +146,8 @@ const ListItem = styled.li<{ focused?: boolean }>`
   }
 
   &:hover {
-    background: ${COLORS.faded};
+    background: ${props => props.onClick ? COLORS.faded : COLORS.background};
+    cursor: ${props => props.onClick ? 'pointer' : 'default'};
   }
 `
 
