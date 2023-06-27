@@ -3,7 +3,11 @@ import { RiLoader5Fill } from 'react-icons/ri'
 import { IconBaseProps } from 'react-icons'
 import { rotate } from '@/utils/animations'
 
-export const Spinner = (props: IconBaseProps) => (
+interface Props extends IconBaseProps {
+  className?: string
+}
+
+export const Spinner = (props: Props) => (
   <AnimatedSpinner {...props} />
 )
 
