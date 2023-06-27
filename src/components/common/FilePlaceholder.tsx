@@ -1,7 +1,7 @@
-import { rotate } from "@/utils/animations";
-import { COLORS } from "@/utils/colors";
-import { GiMusicalScore } from "react-icons/gi";
-import styled from "styled-components";
+import { rotate } from '@/utils/animations';
+import { COLORS } from '@/utils/colors';
+import { GiMusicalScore } from 'react-icons/gi';
+import styled from 'styled-components';
 
 interface Props {
   hidden?: boolean

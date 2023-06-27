@@ -1,6 +1,6 @@
-import { lato } from "@/fonts";
-import { COLORS } from "@/utils/colors";
-import styled from "styled-components";
+import { lato } from '@/fonts';
+import { COLORS } from '@/utils/colors';
+import styled from 'styled-components';
 
 export const Button = styled.button`
   height: 48px;

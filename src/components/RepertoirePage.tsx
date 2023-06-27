@@ -1,8 +1,8 @@
-import { useRouter } from "next/router"
-import { Page, PageContent, PageTitle, RepertoireList, RepertoireListItem } from "@/components/common"
-import { REPERTOIRE_CONFIG_REGEX, REPERTOIRE_ITEM_NAMES } from "@/constants"
-import { parseRepertoireConfig } from "@/utils/parseRepertoireConfig"
-import { useRepertoire } from "@/hooks"
+import { useRouter } from 'next/router'
+import { Page, PageContent, PageTitle, RepertoireList, RepertoireListItem } from '@/components/common'
+import { REPERTOIRE_CONFIG_REGEX, REPERTOIRE_ITEM_NAMES } from '@/constants'
+import { parseRepertoireConfig } from '@/utils/parseRepertoireConfig'
+import { useRepertoire } from '@/hooks'
 
 export const RepertoirePage = () => {
   const { query: { repertoireConfig } } = useRouter()

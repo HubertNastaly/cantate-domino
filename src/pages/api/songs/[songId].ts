@@ -1,7 +1,7 @@
-import { VOICES, Voice, VoiceFiles } from "@/types";
-import { fetchSong, getDriveInstance } from "@/utils/googleApi";
-import { drive_v3 } from "googleapis";
-import { NextApiRequest, NextApiResponse } from "next";
+import { VOICES, Voice, VoiceFiles } from '@/types';
+import { fetchSong, getDriveInstance } from '@/utils/googleApi';
+import { drive_v3 } from 'googleapis';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 type GoogleFiles = drive_v3.Schema$File[] | undefined
 

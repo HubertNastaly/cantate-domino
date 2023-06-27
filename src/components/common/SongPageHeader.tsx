@@ -1,10 +1,10 @@
-import styled from "styled-components"
-import { Song } from "@/types"
-import { useDevice } from "@/hooks"
-import { SongCard } from "./SongCard"
-import { QrCode } from "./QrCode"
-import { GoogleDriveLink } from "./GoogleDriveLink"
-import { BackButton } from "./BackButton"
+import styled from 'styled-components'
+import { Song } from '@/types'
+import { useDevice } from '@/hooks'
+import { SongCard } from './SongCard'
+import { QrCode } from './QrCode'
+import { GoogleDriveLink } from './GoogleDriveLink'
+import { BackButton } from './BackButton'
 
 interface Props {
   song: Song

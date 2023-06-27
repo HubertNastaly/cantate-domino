@@ -1,5 +1,5 @@
-import { BREAKPOINT, CARD_SIZE, COLUMN_GAP } from "@/constants"
-import { CardSize, SongsLayout } from "@/types"
+import { BREAKPOINT, CARD_SIZE, COLUMN_GAP } from '@/constants'
+import { CardSize, SongsLayout } from '@/types'
 
 export function cardsLayout(width: number) {
   const layout: SongsLayout = width < BREAKPOINT.tablet ? 'list' : 'grid'

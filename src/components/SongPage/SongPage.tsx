@@ -1,15 +1,15 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
+import { useRouter } from 'next/router';
+import { useState } from 'react';
 import styled from 'styled-components'
-import { Page, PageContent, SongPageHeader } from "@/components/common";
-import { useElementWidth, useSong } from "@/hooks";
-import { Voice } from "@/types";
-import { googleFileUrl } from "@/utils/googleFileUrl";
-import { SongPageLoader } from "./SongPageLoader";
-import { VoiceButtons } from "./VoiceButtons";
-import { Gallery } from "./Gallery";
-import { AudioBar } from "./AudioBar";
-import { PdfViewer } from "./PdfViewer";
+import { Page, PageContent, SongPageHeader } from '@/components/common';
+import { useElementWidth, useSong } from '@/hooks';
+import { Voice } from '@/types';
+import { googleFileUrl } from '@/utils/googleFileUrl';
+import { SongPageLoader } from './SongPageLoader';
+import { VoiceButtons } from './VoiceButtons';
+import { Gallery } from './Gallery';
+import { AudioBar } from './AudioBar';
+import { PdfViewer } from './PdfViewer';
 
 export function SongPage () {
   const { query: { songId } } = useRouter()

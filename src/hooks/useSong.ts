@@ -1,7 +1,7 @@
-import { useCallback } from "react"
-import axios from "axios"
-import { useQuery } from "@tanstack/react-query"
-import { Mass, Song, SongDetailed } from "@/types"
+import { useCallback } from 'react'
+import axios from 'axios'
+import { useQuery } from '@tanstack/react-query'
+import { Mass, Song, SongDetailed } from '@/types'
 
 export function useSong(songId: string) {
   const songUrl = `/api/songs/${songId}`

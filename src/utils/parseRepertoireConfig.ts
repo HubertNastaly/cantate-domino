@@ -1,4 +1,4 @@
-import { RepertoireItem } from "@/types"
+import { RepertoireItem } from '@/types'
 
 export function parseRepertoireConfig(configString: string) {
   const configComponents = configString.split('&')

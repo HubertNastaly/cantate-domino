@@ -1,10 +1,10 @@
-import { BREAKPOINT } from "@/constants"
-import { lato } from "@/fonts"
-import { VOICES, Voice, VoiceFiles } from "@/types"
-import { capitalize } from "@/utils/capitalize"
-import { COLORS } from "@/utils/colors"
-import { GiElephant, GiFeline, GiHummingbird, GiRooster } from "react-icons/gi"
-import styled from "styled-components"
+import { BREAKPOINT } from '@/constants'
+import { lato } from '@/fonts'
+import { VOICES, Voice, VoiceFiles } from '@/types'
+import { capitalize } from '@/utils/capitalize'
+import { COLORS } from '@/utils/colors'
+import { GiElephant, GiFeline, GiHummingbird, GiRooster } from 'react-icons/gi'
+import styled from 'styled-components'
 
 interface Props {
   voiceFiles: VoiceFiles

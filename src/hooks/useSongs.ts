@@ -1,8 +1,8 @@
-import { EMPTY_FILTER_CHAR } from "@/constants"
-import { Song } from "@/types"
-import { useInfiniteQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { useCallback, useEffect, useMemo } from "react"
+import { EMPTY_FILTER_CHAR } from '@/constants'
+import { Song } from '@/types'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { useCallback, useEffect, useMemo } from 'react'
 
 interface PageParam {
   nextPageToken: string | null

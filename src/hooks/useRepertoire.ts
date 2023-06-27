@@ -1,7 +1,7 @@
-import { Repertoire } from "@/types"
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
-import { useCallback } from "react"
+import { Repertoire } from '@/types'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+import { useCallback } from 'react'
 
 const API_URL = '/api/repertoire'
 

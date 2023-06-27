@@ -1,8 +1,8 @@
-import { useOutsideClick } from "@/hooks"
-import { COLORS } from "@/utils/colors"
-import { ReactNode, useRef, useState } from "react"
-import { createPortal } from "react-dom"
-import styled, { keyframes } from "styled-components"
+import { useOutsideClick } from '@/hooks'
+import { COLORS } from '@/utils/colors'
+import { ReactNode, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import styled, { keyframes } from 'styled-components'
 
 interface Props {
   trigger: (props: { onClick: () => void }) => JSX.Element

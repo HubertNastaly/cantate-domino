@@ -1,6 +1,6 @@
-import styled from "styled-components"
-import { Cover, SongCard, smallShadow } from "@/components/common"
-import { rotate } from "@/utils/animations"
+import styled from 'styled-components'
+import { Cover, SongCard, smallShadow } from '@/components/common'
+import { rotate } from '@/utils/animations'
 
 interface Props {
   songId: string

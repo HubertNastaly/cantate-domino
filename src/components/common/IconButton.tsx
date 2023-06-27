@@ -1,5 +1,5 @@
-import { COLORS } from "@/utils/colors";
-import styled, { css } from "styled-components";
+import { COLORS } from '@/utils/colors';
+import styled, { css } from 'styled-components';
 
 export const iconButtonStyles = css<{ size: number }>`
   width: ${props => props.size}px;

@@ -1,12 +1,12 @@
-import styled, { keyframes } from "styled-components"
-import { FilePlaceholder, Modal } from "@/components/common"
-import { BREAKPOINT } from "@/constants"
-import { googleFileUrl } from "@/utils/googleFileUrl"
-import { MdZoomIn } from "react-icons/md"
-import { COLORS } from "@/utils/colors"
-import { useState } from "react"
-import { GiMusicalScore } from "react-icons/gi"
-import { rotate } from "@/utils/animations"
+import styled, { keyframes } from 'styled-components'
+import { FilePlaceholder, Modal } from '@/components/common'
+import { BREAKPOINT } from '@/constants'
+import { googleFileUrl } from '@/utils/googleFileUrl'
+import { MdZoomIn } from 'react-icons/md'
+import { COLORS } from '@/utils/colors'
+import { useState } from 'react'
+import { GiMusicalScore } from 'react-icons/gi'
+import { rotate } from '@/utils/animations'
 
 interface Props {
   songName: string

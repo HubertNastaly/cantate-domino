@@ -1,5 +1,5 @@
-import { clamp } from "@/utils/clamp"
-import { useCallback, useRef, useState } from "react"
+import { clamp } from '@/utils/clamp'
+import { useCallback, useRef, useState } from 'react'
 
 export type AudioState = 'playing' | 'paused' | 'loading'
 

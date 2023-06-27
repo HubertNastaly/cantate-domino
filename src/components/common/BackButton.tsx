@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { IoChevronBackCircleSharp } from 'react-icons/io5'
-import { RectangleIconButton } from "./IconButton"
+import { RectangleIconButton } from './IconButton'
 
 export const BackButton = () => {
   const { back } = useRouter()

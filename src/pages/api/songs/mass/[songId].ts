@@ -1,6 +1,6 @@
-import { MassFiles } from "@/types"
-import { fetchSong, getDriveInstance } from "@/utils/googleApi"
-import { NextApiRequest, NextApiResponse } from "next"
+import { MassFiles } from '@/types'
+import { fetchSong, getDriveInstance } from '@/utils/googleApi'
+import { NextApiRequest, NextApiResponse } from 'next'
 
 interface SongRequest extends NextApiRequest {
   query: {

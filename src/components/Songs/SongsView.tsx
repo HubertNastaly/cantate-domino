@@ -1,9 +1,9 @@
-import { COLUMN_GAP } from "@/constants"
-import { Song, SongsLayout } from "@/types"
-import styled, { css } from "styled-components"
-import { LoaderRow } from "./LoaderRow"
-import { SongCard } from "../common"
-import { cardsLayout } from "@/utils/cardsLayout"
+import { COLUMN_GAP } from '@/constants'
+import { Song, SongsLayout } from '@/types'
+import styled, { css } from 'styled-components'
+import { LoaderRow } from './LoaderRow'
+import { SongCard } from '../common'
+import { cardsLayout } from '@/utils/cardsLayout'
 
 interface Props {
   songs: Song[]

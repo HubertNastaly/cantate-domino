@@ -1,6 +1,6 @@
-import { REPERTOIRE_ITEMS } from "@/constants";
-import { Repertoire, RepertoireItem, Song } from "@/types";
-import { ReactNode, createContext, useCallback, useContext, useState } from "react";
+import { REPERTOIRE_ITEMS } from '@/constants';
+import { Repertoire, RepertoireItem, Song } from '@/types';
+import { ReactNode, createContext, useCallback, useContext, useState } from 'react';
 
 const EMPTY_REPERTOIRE = Object.fromEntries(REPERTOIRE_ITEMS.map(item => [item, undefined] as const)) as Repertoire
 

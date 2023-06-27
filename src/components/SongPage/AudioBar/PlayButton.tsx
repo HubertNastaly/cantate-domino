@@ -1,8 +1,8 @@
-import { COLORS } from "@/utils/colors"
-import { IoIosPause, IoIosPlay } from "react-icons/io"
-import styled, { css } from "styled-components"
-import { Spinner } from "@/components/common"
-import { AudioState } from "@/hooks"
+import { COLORS } from '@/utils/colors'
+import { IoIosPause, IoIosPlay } from 'react-icons/io'
+import styled, { css } from 'styled-components'
+import { Spinner } from '@/components/common'
+import { AudioState } from '@/hooks'
 
 interface Props {
   state: AudioState
