@@ -1,12 +1,10 @@
 import styled, { keyframes } from 'styled-components'
 import { MdZoomIn } from 'react-icons/md'
 import { useState } from 'react'
-import { GiMusicalScore } from 'react-icons/gi'
 import { FilePlaceholder, Modal } from '@/components/common'
 import { BREAKPOINT } from '@/constants'
 import { googleFileUrl } from '@/utils/googleFileUrl'
 import { COLORS } from '@/utils/colors'
-import { rotate } from '@/utils/animations'
 
 interface Props {
   songName: string
@@ -135,12 +133,4 @@ const Image = styled.img<{ fullScreen?: boolean }>`
 
   filter: grayscale(100%);
   object-fit: contain;
-`
-
-const MusicScoreIcon = styled(GiMusicalScore)`
-  position: absolute;
-  z-index: 3;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `
