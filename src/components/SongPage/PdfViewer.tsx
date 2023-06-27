@@ -1,5 +1,5 @@
-import { Document, Page as PdfPage, pdfjs } from "react-pdf"
-import styled from "styled-components"
+import { Document, Page as PdfPage, pdfjs } from 'react-pdf'
+import styled from 'styled-components'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 

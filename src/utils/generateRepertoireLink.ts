@@ -1,5 +1,5 @@
-import { REPERTOIRE_ITEMS } from "@/constants";
-import { Repertoire } from "@/types";
+import { REPERTOIRE_ITEMS } from '@/constants';
+import { Repertoire } from '@/types';
 
 export function generateRepertoireLink(repertoire: Repertoire) {
   if(typeof window === 'undefined') {

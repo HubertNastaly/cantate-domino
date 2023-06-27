@@ -1,10 +1,10 @@
-import { useRef, useState, KeyboardEvent, useCallback, HTMLProps, PropsWithChildren, useEffect, RefObject } from "react"
-import { SearchBar } from "./SearchBar"
-import { useOutsideClick, useSongs } from "@/hooks"
-import styled from "styled-components"
-import { SongCard, smallShadow } from "./SongCard"
-import { COLORS } from "@/utils/colors"
-import { Song } from "@/types"
+import { KeyboardEvent, useCallback, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { SearchBar } from './SearchBar'
+import { SongCard, smallShadow } from './SongCard'
+import { useOutsideClick, useSongs } from '@/hooks'
+import { COLORS } from '@/utils/colors'
+import { Song } from '@/types'
 
 const SUGGESTIONS_COUNT = 5
 

@@ -1,5 +1,5 @@
-import { BREAKPOINT, PAGE_CONTENT_WIDTH } from '@/constants'
 import styled from 'styled-components'
+import { BREAKPOINT, PAGE_CONTENT_WIDTH } from '@/constants'
 
 export const Page = styled.main`
   width: 100%;

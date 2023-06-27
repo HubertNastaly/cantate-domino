@@ -1,11 +1,11 @@
-import styled from "styled-components"
-import Link from "next/link"
-import { BREAKPOINT } from "@/constants"
-import { Page, PageContent, SearchBar } from "@/components/common"
-import { Songs } from "@/components/Songs"
-import { COLORS } from "@/utils/colors"
-import { useElementWidth } from "@/hooks"
-import { useSongsContext } from "@/providers"
+import styled from 'styled-components'
+import Link from 'next/link'
+import { BREAKPOINT } from '@/constants'
+import { Page, PageContent, SearchBar } from '@/components/common'
+import { Songs } from '@/components/Songs'
+import { COLORS } from '@/utils/colors'
+import { useElementWidth } from '@/hooks'
+import { useSongsContext } from '@/providers'
 
 export const HomePage = () => {
   const [contentRef, contentWidth] = useElementWidth<HTMLDivElement>()

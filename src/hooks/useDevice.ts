@@ -1,6 +1,6 @@
-import { useEffect } from "react"
-import { useElementWidth } from "./useElementWidth"
-import { BREAKPOINT } from "@/constants"
+import { useEffect } from 'react'
+import { useElementWidth } from './useElementWidth'
+import { BREAKPOINT } from '@/constants'
 
 export const useDevice = () => {
   const [setRef, width] = useElementWidth()

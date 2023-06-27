@@ -1,10 +1,10 @@
-import { Song } from "@/types"
-import Link from "next/link"
-import styled, { css } from "styled-components"
+import Link from 'next/link'
+import styled, { css } from 'styled-components'
 import { toSvg } from 'jdenticon'
-import { COLORS } from "@/utils/colors"
-import { CARD_SIZE } from "@/constants"
-import { CardSize } from "@/types"
+import { Song } from '@/types'
+import { COLORS } from '@/utils/colors'
+import { CARD_SIZE } from '@/constants'
+import { CardSize } from '@/types'
 
 type TitlePlacement = 'bottom' | 'right' | 'none'
 

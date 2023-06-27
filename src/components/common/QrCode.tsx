@@ -1,7 +1,7 @@
-import { MdQrCode } from "react-icons/md"
+import { MdQrCode } from 'react-icons/md'
 import { QRCodeSVG } from 'qrcode.react'
-import { Modal } from "./Modal"
-import { RoundedIconButton } from "./IconButton"
+import { Modal } from './Modal'
+import { RoundedIconButton } from './IconButton'
 
 interface Props {
   url: string

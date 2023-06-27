@@ -1,6 +1,6 @@
-import { RepertoireItem, Song } from "@/types";
-import { getDriveInstance } from "@/utils/googleApi";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { RepertoireItem, Song } from '@/types';
+import { getDriveInstance } from '@/utils/googleApi';
 
 interface RepertoireRequest extends NextApiRequest {
   query: Record<RepertoireItem, string>
@@ -17,7 +17,7 @@ export default async function handler(req: RepertoireRequest, res: NextApiRespon
     [repertoirItem, songId ? await drive.files.get({ fileId: songId }) : undefined] as const
   ))
 
-  const success = songResponses.every(([_, response]) => response ? response.status === 200 : true)
+  const success = songResponses.every(([, response]) => response ? response.status === 200 : true)
   if(success) {
     const parsedResponse = songResponses.map(([repertoirItem, response]) => {
       const parsedSongResponse = response ? ({ id: response.data.id, name: response.data.name } as Song) : undefined

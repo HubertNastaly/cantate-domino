@@ -1,7 +1,7 @@
-import { lato } from "@/fonts"
-import { COLORS } from "@/utils/colors"
 import { IoIosSearch } from 'react-icons/io'
-import styled from "styled-components"
+import styled from 'styled-components'
+import { lato } from '@/fonts'
+import { COLORS } from '@/utils/colors'
 
 interface Props {
   value: string

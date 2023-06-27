@@ -1,4 +1,4 @@
-import { VoiceFiles } from "./voice"
+import { VoiceFiles } from './voice'
 
 export interface Song {
   id: string
