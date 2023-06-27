@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { RiLoader5Fill } from 'react-icons/ri'
-import { rotate } from '@/utils/animations'
 import { IconBaseProps } from 'react-icons'
+import { rotate } from '@/utils/animations'
 
 export const Spinner = (props: IconBaseProps) => (
   <AnimatedSpinner {...props} />

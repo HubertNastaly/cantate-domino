@@ -1,7 +1,7 @@
-import { useInfiniteScroll } from '@/hooks'
 import { useEffect } from 'react'
-import { useSongsContext } from '@/providers'
 import { SongsView } from './SongsView'
+import { useInfiniteScroll } from '@/hooks'
+import { useSongsContext } from '@/providers'
 import { cardsLayout } from '@/utils/cardsLayout'
 
 const ROWS_PER_CHUNK = 5

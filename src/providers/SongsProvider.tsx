@@ -1,5 +1,5 @@
-import { useSongs } from '@/hooks';
 import { ReactNode, createContext, useContext, useState } from 'react';
+import { useSongs } from '@/hooks';
 
 type Context = ReturnType<typeof useSongs> & {
   songsPerPage: number

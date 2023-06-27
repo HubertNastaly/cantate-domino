@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { Page, PageContent, SongPageHeader } from '../common'
-import { useElementWidth, useMass } from '@/hooks'
 import { SongPageLoader } from '../SongPage/SongPageLoader'
 import { SongsView } from '../Songs'
+import { useElementWidth, useMass } from '@/hooks'
 import { Song } from '@/types'
 import { BREAKPOINT } from '@/constants'
 

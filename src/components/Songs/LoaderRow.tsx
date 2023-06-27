@@ -1,6 +1,6 @@
+import styled, { keyframes } from 'styled-components'
 import { CARD_SIZE } from '@/constants'
 import { Cover, bigShadow, smallShadow } from '@/components/common'
-import styled, { keyframes } from 'styled-components'
 import { CardSize } from '@/types'
 
 interface Props {

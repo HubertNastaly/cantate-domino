@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { MdDelete } from 'react-icons/md'
-import { Song } from '@/types'
-import { CARD_SIZE } from '@/constants'
 import { Cover, SongCard } from './SongCard'
 import { RoundedIconButton } from './IconButton'
+import { Song } from '@/types'
+import { CARD_SIZE } from '@/constants'
 
 interface Props {
   label: string

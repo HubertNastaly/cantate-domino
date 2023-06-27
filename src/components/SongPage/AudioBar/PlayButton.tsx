@@ -1,6 +1,6 @@
-import { COLORS } from '@/utils/colors'
 import { IoIosPause, IoIosPlay } from 'react-icons/io'
 import styled, { css } from 'styled-components'
+import { COLORS } from '@/utils/colors'
 import { Spinner } from '@/components/common'
 import { AudioState } from '@/hooks'
 

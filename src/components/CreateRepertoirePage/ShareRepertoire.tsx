@@ -1,10 +1,10 @@
+import { HiLink } from 'react-icons/hi'
+import styled from 'styled-components'
 import { BREAKPOINT } from '@/constants'
 import { lato } from '@/fonts'
 import { useCopyToClipboard } from '@/hooks'
 import { Repertoire } from '@/types'
 import { generateRepertoireLink } from '@/utils/generateRepertoireLink'
-import { HiLink } from 'react-icons/hi'
-import styled from 'styled-components'
 import { Button } from '@/components/common/Button'
 
 interface Props {
